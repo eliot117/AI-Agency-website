@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 375" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .rating-title {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        font-size: 34px;
+        font-weight: 600;
+        fill: #8F6F16;
+        letter-spacing: -0.015em;
+      }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="375" fill="#FFFFFF" />
+
+  <!-- Top Tab Layer 1 (Back) -->
+  <path d="M 130 68 C 130 36 160 36 185 36 L 615 36 C 640 36 670 36 670 68 Z" fill="#EFE3B5" opacity="0.6" />
+
+  <!-- Top Tab Layer 2 (Middle) -->
+  <path d="M 75 80 C 75 48 105 48 135 48 L 665 48 C 695 48 725 48 725 80 Z" fill="#F6EBC2" opacity="0.85" />
+
+  <!-- Main Card Container -->
+  <rect x="16" y="66" width="768" height="268" rx="34" ry="34" fill="#FCF6DC" />
+
+  <!-- Title Text -->
+  <text x="52" y="138" class="rating-title">How do you like the service?</text>
+
+  <!-- White Pill Row -->
+  <rect x="52" y="170" width="696" height="96" rx="48" ry="48" fill="#FFFFFF" />
+
+  <!-- 5 Star Rating Buttons (Centered) -->
+  <!-- Pill center X = 52 + 348 = 400. Total width = 5*52 + 4*15 = 320. Start X = 400 - 160 = 240. Y = 170 + 22 = 192 -->
+  
+  <!-- Star 1 -->
+  <g transform="translate(240, 192)">
+    <rect width="52" height="52" rx="9" ry="9" fill="#FFFFFF" stroke="#DCA836" stroke-width="2.5" />
+    <path d="M26 13 L29.7 20.6 L38.1 21.8 L32.1 27.6 L33.5 35.9 L26 32 L18.5 35.9 L19.9 27.6 L13.9 21.8 L22.3 20.6 Z" fill="#DCA836" />
+  </g>
+
+  <!-- Star 2 -->
+  <g transform="translate(307, 192)">
+    <rect width="52" height="52" rx="9" ry="9" fill="#FFFFFF" stroke="#DCA836" stroke-width="2.5" />
+    <path d="M26 13 L29.7 20.6 L38.1 21.8 L32.1 27.6 L33.5 35.9 L26 32 L18.5 35.9 L19.9 27.6 L13.9 21.8 L22.3 20.6 Z" fill="#DCA836" />
+  </g>
+
+  <!-- Star 3 -->
+  <g transform="translate(374, 192)">
+    <rect width="52" height="52" rx="9" ry="9" fill="#FFFFFF" stroke="#DCA836" stroke-width="2.5" />
+    <path d="M26 13 L29.7 20.6 L38.1 21.8 L32.1 27.6 L33.5 35.9 L26 32 L18.5 35.9 L19.9 27.6 L13.9 21.8 L22.3 20.6 Z" fill="#DCA836" />
+  </g>
+
+  <!-- Star 4 -->
+  <g transform="translate(441, 192)">
+    <rect width="52" height="52" rx="9" ry="9" fill="#FFFFFF" stroke="#DCA836" stroke-width="2.5" />
+    <path d="M26 13 L29.7 20.6 L38.1 21.8 L32.1 27.6 L33.5 35.9 L26 32 L18.5 35.9 L19.9 27.6 L13.9 21.8 L22.3 20.6 Z" fill="#DCA836" />
+  </g>
+
+  <!-- Star 5 -->
+  <g transform="translate(508, 192)">
+    <rect width="52" height="52" rx="9" ry="9" fill="#FFFFFF" stroke="#DCA836" stroke-width="2.5" />
+    <path d="M26 13 L29.7 20.6 L38.1 21.8 L32.1 27.6 L33.5 35.9 L26 32 L18.5 35.9 L19.9 27.6 L13.9 21.8 L22.3 20.6 Z" fill="#DCA836" />
+  </g>
+</svg>

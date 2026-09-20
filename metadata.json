@@ -1,0 +1,7 @@
+{
+  "name": "AI Launch",
+  "description": "Turn leads into booked calls on autopilot with AI Launch",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

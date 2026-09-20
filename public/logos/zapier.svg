@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+  <title>Zapier</title>
+  <rect width="24" height="24" fill="#FFFFFF" />
+  <g fill="#FF4F00">
+    <rect x="2" y="10.5" width="20" height="3" rx="1.5" />
+    <rect x="2" y="10.5" width="20" height="3" rx="1.5" transform="rotate(60 12 12)" />
+    <rect x="2" y="10.5" width="20" height="3" rx="1.5" transform="rotate(120 12 12)" />
+  </g>
+</svg>

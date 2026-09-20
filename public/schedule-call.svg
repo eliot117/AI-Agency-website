@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .call-title {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+        fill: #00B92B;
+        letter-spacing: -0.015em;
+      }
+      .pill-text {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        font-size: 31px;
+        font-weight: 500;
+        fill: #0B0F19;
+        letter-spacing: -0.01em;
+      }
+    </style>
+    <filter id="subtle-pill-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="360" fill="#FFFFFF" />
+
+  <!-- Tab Layer 1 (Back top) -->
+  <path d="M 140 70 C 140 36 170 36 195 36 L 605 36 C 630 36 660 36 660 70 Z" fill="#E6F7E9" opacity="0.65" />
+
+  <!-- Tab Layer 2 (Middle top) -->
+  <path d="M 90 82 C 90 48 118 48 145 48 L 655 48 C 682 48 710 48 710 82 Z" fill="#DBF3DF" opacity="0.85" />
+
+  <!-- Main Card Container -->
+  <rect x="30" y="68" width="740" height="240" rx="30" ry="30" fill="#CEF3D4" />
+
+  <!-- Title Text -->
+  <text x="62" y="134" class="call-title">Can we schedule a call?</text>
+
+  <!-- White Pill Row -->
+  <rect x="62" y="164" width="676" height="96" rx="48" ry="48" fill="#FFFFFF" filter="url(#subtle-pill-shadow)" />
+
+  <!-- Calendar Icon inside Pill -->
+  <g transform="translate(96, 194)">
+    <!-- Calendar Body Outline -->
+    <rect x="0" y="4" width="30" height="28" rx="5" ry="5" fill="none" stroke="#0B0F19" stroke-width="2.6" />
+    <!-- Header Line -->
+    <line x1="0" y1="12" x2="30" y2="12" stroke="#0B0F19" stroke-width="2.6" />
+    <!-- Hanging Pins / Hooks -->
+    <line x1="7" y1="0" x2="7" y2="5" stroke="#0B0F19" stroke-width="2.6" stroke-linecap="round" />
+    <line x1="23" y1="0" x2="23" y2="5" stroke="#0B0F19" stroke-width="2.6" stroke-linecap="round" />
+    <!-- Day Dots -->
+    <circle cx="8" cy="18" r="1.5" fill="#0B0F19" />
+    <circle cx="15" cy="18" r="1.5" fill="#0B0F19" />
+    <circle cx="22" cy="18" r="1.5" fill="#0B0F19" />
+    <circle cx="8" cy="24" r="1.5" fill="#0B0F19" />
+    <circle cx="15" cy="24" r="1.5" fill="#0B0F19" />
+    <circle cx="22" cy="24" r="1.5" fill="#0B0F19" />
+  </g>
+
+  <!-- Text inside Pill -->
+  <text x="142" y="222" class="pill-text">Tue, May 21 at 11:00 AM</text>
+</svg>
