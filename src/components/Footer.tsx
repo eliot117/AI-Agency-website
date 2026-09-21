@@ -2,6 +2,7 @@ import React from 'react';
 import { Mail, Phone, MessageSquare, MapPin, ArrowRight, ExternalLink, Send } from 'lucide-react';
 import { SaalinkLogo } from './Logos';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
+import { openRetellChat } from '@/lib/retell';
 
 interface FooterProps {
   onOpenContact: () => void;
@@ -24,13 +25,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
 
   const handleChatClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Dispatch event or navigate to contact chat section
+    openRetellChat();
     window.dispatchEvent(new CustomEvent('open-chat-widget'));
-    if (onNavigate) {
-      onNavigate('contact', '#chat');
-    } else {
-      onOpenContact();
-    }
   };
 
   return (

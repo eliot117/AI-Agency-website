@@ -4,6 +4,7 @@ import { FAQ } from './FAQ';
 import { FinalCTA } from './FinalCTA';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
+import { openRetellChat } from '@/lib/retell';
 
 interface ContactPageProps {
   onNavigateHome?: () => void;
@@ -446,15 +447,38 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleDemoSubmit = (e: React.FormEvent) => {
+  const handleDemoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!demoFullName || !demoEmail || demoAssessmentCompleted === 'no') return;
 
     setDemoSubmitting(true);
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://hook.eu1.make.com/24da4md1yue3471i3sx1zx3wk7slixdw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: demoFullName,
+          work_email: demoEmail,
+          company_name: demoCompanyName,
+          company_size: demoCompanySize,
+          interests: demoInterests,
+          preferred_meeting_date: demoDate,
+          completed_assessment: demoAssessmentCompleted,
+        }),
+      });
+
+      if (response.ok) {
+        setDemoSubmitted(true);
+      } else {
+        console.error('Failed to submit demo request:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting demo request:', error);
+    } finally {
       setDemoSubmitting(false);
-      setDemoSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -462,15 +486,35 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate real submission
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://hook.eu1.make.com/mw8f4cy71qfgf8o4qyjo79hlz44flqnt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        console.error('Failed to submit message:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting message:', error);
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleResetForm = () => {
@@ -573,9 +617,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
             {/* Live Chat */}
             <ScrollAnimation direction="up" delay={0.1} viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }} className="h-full">
-              <div className="group rounded-[16px] border border-[#f2f2f2] bg-[#e6f0ff]/10 p-7 flex flex-col items-center text-center shadow-[0_0_8px_-2px_#f2f2f2] hover:border-[#d4e4fc] hover:shadow-md transition-all duration-200 h-full">
-                <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-[14px] bg-[#e6f0ff] flex items-center justify-center text-[#0a0a0a] mb-5 group-hover:scale-105 transition-transform">
-                  <Bot className="w-7 h-7 sm:w-8 sm:h-8 text-[#0a0a0a]" strokeWidth={1.8} />
+              <button
+                type="button"
+                onClick={openRetellChat}
+                className="group block w-full rounded-[16px] border border-[#f2f2f2] bg-[#e6f0ff]/10 p-7 flex flex-col items-center text-center shadow-[0_0_8px_-2px_#f2f2f2] hover:border-[#d4e4fc] hover:shadow-md transition-all duration-200 h-full cursor-pointer"
+              >
+                <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-[14px] bg-[#e6f0ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                  <Bot className="w-7 h-7 sm:w-8 sm:h-8 text-[#0a0a0a] group-hover:text-[#0056ff] transition-colors" strokeWidth={1.8} />
                 </div>
                 <h3 className="font-heading font-semibold text-[17.5px] sm:text-[18px] text-[#0a0a0a] mb-2 min-h-[26px] flex items-center justify-center">
                   Live Chat
@@ -583,7 +631,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <p className="text-[14.5px] sm:text-[15px] text-[#525252] leading-relaxed flex items-center justify-center">
                   Jay is here to help.
                 </p>
-              </div>
+              </button>
             </ScrollAnimation>
 
             {/* Call Us */}
