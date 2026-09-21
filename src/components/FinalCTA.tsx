@@ -186,11 +186,11 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onStartTrial, onBookDemo, on
             <button
               onClick={() => {
                 if (onNavigate) {
-                  onNavigate('contact', '#ai-consulting');
+                  onNavigate('contact', '#book-a-demo');
                 } else if (onStartTrial) {
                   onStartTrial();
                 } else {
-                  window.location.hash = '#ai-consulting';
+                  window.location.hash = '#book-a-demo';
                 }
               }}
               className="btn-dark w-full sm:w-auto text-[16px] px-7 py-3 cursor-pointer shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"

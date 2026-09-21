@@ -213,7 +213,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
               <div className="flex flex-col gap-3">
                 {/* Button 1: Free AI Consulting */}
                 <button
-                  onClick={(e) => handleLinkClick('contact', '#ai-consulting')(e)}
+                  onClick={(e) => handleLinkClick('contact', '#book-a-demo')(e)}
                   className="btn-dark w-full py-2.5 px-4 text-[13.5px] sm:text-[14px] cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap shadow-xs hover:shadow-md transition-all"
                 >
                   <span>Free AI Consulting</span>
@@ -233,7 +233,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
 
                 {/* Button 3: Send Us a Message */}
                 <button
-                  onClick={(e) => handleLinkClick('contact', '#send-message')(e)}
+                  onClick={(e) => handleLinkClick('contact', '#contact-form')(e)}
                   className="btn-dark-outline w-full py-2.5 px-4 text-[13.5px] sm:text-[14px] cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap bg-white hover:bg-gray-50 transition-all text-center"
                 >
                   <span>Send Us a Message</span>

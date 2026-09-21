@@ -624,6 +624,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
       {/* Main Book a Demo Split Section */}
       <section id="book-a-demo" className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-20 pb-24 sm:pb-32 lg:pb-40">
+        <div id="ai-consulting" className="scroll-mt-28" />
         {/* Subtle Ambient Background Gradient */}
         <div
           aria-hidden="true"
@@ -969,7 +970,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Send us a message form (7-8 cols) */}
             <ScrollAnimation direction="up" viewport={{ amount: 0.15, margin: '0px 0px -40px 0px', once: true }} className="lg:col-span-7 xl:col-span-8">
-              <div id="contact-form" className="rounded-[16px] border border-[#f2f2f2] bg-white p-6 sm:p-8 md:p-10 shadow-[0_0_8px_-2px_#f2f2f2] scroll-mt-28">
+              <div id="contact-form" className="rounded-[16px] border border-[#f2f2f2] bg-white p-6 sm:p-8 md:p-10 shadow-[0_0_8px_-2px_#f2f2f2] scroll-mt-28 relative">
+                <div id="send-us-a-message" className="scroll-mt-28" />
+                <div id="send-message" className="scroll-mt-28" />
                 <div className="mb-8">
                   <h2 className="font-heading font-semibold text-2xl sm:text-[26px] text-[#0a0a0a] mb-2">
                     Send us a message

@@ -126,7 +126,22 @@ export function App() {
 
     if (hashOrSlug && hashOrSlug.startsWith('#')) {
       setTimeout(() => {
-        const el = document.querySelector(hashOrSlug);
+        let target = hashOrSlug;
+        if (
+          hashOrSlug === '#ai-consulting' ||
+          hashOrSlug === '#book-a-demo' ||
+          hashOrSlug === '#book-demo' ||
+          hashOrSlug === '#free-ai-consulting'
+        ) {
+          target = '#book-a-demo';
+        } else if (
+          hashOrSlug === '#send-us-a-message' ||
+          hashOrSlug === '#send-message' ||
+          hashOrSlug === '#contact-form'
+        ) {
+          target = '#contact-form';
+        }
+        const el = document.querySelector(target);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
