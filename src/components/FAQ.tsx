@@ -31,7 +31,7 @@ export const FAQ: React.FC<FAQProps> = () => {
           </h2>
 
           <p className="saalink-subhead max-w-[620px] mx-auto">
-            Everything you need to know about saalink and how it helps you book more calls on autopilot.
+            Everything you need to know about AI Launch and how it helps you book more appointments on autopilot.
           </p>
         </div>
 

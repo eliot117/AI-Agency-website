@@ -215,7 +215,7 @@ export function App() {
 
               {/* Pricing Section on Home Page */}
               <Pricing
-                onOpenCompare={() => navigateTo('pricing', '#compare-plans')}
+                onOpenCompare={() => navigateTo('pricing', '#compare-plans-2')}
                 onSelectPlan={handleSelectPlan}
                 onNavigate={navigateTo}
                 onOpenDemo={() => navigateTo('contact', '#book-a-demo')}

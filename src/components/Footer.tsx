@@ -52,24 +52,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                 Turn missed calls into booked appointments, automatically. Built for local businesses ready to put their follow ups on autopilot.
               </p>
 
-              {/* Location Text */}
-              <div className="mb-4 flex items-center gap-2 rounded-[10px] bg-[#e6f0ff] px-3 h-9 text-[#0a0a0a] border border-[#d4e4fc] w-fit max-w-full">
-                <MapPin className="h-3.5 w-3.5 text-[#0056ff] shrink-0" />
-                <span className="text-[12px] sm:text-[12.5px] font-medium text-[#0a0a0a] whitespace-nowrap">
+              {/* Location Text Box */}
+              <div className="mb-4 flex flex-col items-center justify-center gap-1.5 rounded-[12px] bg-[#e6f0ff] p-2 text-[#0a0a0a] border border-[#d4e4fc] w-[210px] h-[80px]">
+                <MapPin className="h-5 w-5 text-[#0056ff] shrink-0" />
+                <span className="text-[12.5px] font-medium text-[#0a0a0a] text-center leading-snug">
                   Melbourne, VIC, Australia
                 </span>
               </div>
 
               {/* Icon Buttons */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 w-[210px]">
                 {/* Icon Button 1: Email */}
                 <a
                   href="mailto:eliot.rbn18@gmail.com"
                   aria-label="Email eliot.rbn18@gmail.com"
                   title="Email: eliot.rbn18@gmail.com"
-                  className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff]"
+                  className="flex-1 h-11 flex items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff]"
                 >
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-5 w-5" />
                 </a>
 
                 {/* Icon Button 2: Call */}
@@ -77,9 +77,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                   href="tel:0431173090"
                   aria-label="Call 0431 173 090"
                   title="Call: 0431 173 090"
-                  className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff]"
+                  className="flex-1 h-11 flex items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff]"
                 >
-                  <Phone className="h-4 w-4" />
+                  <Phone className="h-5 w-5" />
                 </a>
 
                 {/* Icon Button 3: Chat */}
@@ -87,9 +87,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                   onClick={handleChatClick}
                   aria-label="Open AI Chat Agent"
                   title="Open AI Chat Agent"
-                  className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff] cursor-pointer"
+                  className="flex-1 h-11 flex items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff] cursor-pointer"
                 >
-                  <MessageSquare className="h-4 w-4" />
+                  <MessageSquare className="h-5 w-5" />
                 </button>
               </div>
             </div>
@@ -100,6 +100,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                 Pages
               </h4>
               <ul className="space-y-3.5 text-[14px] text-[#525252]">
+                <li>
+                  <a
+                    href="/"
+                    onClick={handleLinkClick('home')}
+                    className="hover:text-[#0056ff] transition-colors cursor-pointer"
+                  >
+                    Home
+                  </a>
+                </li>
                 <li>
                   <a
                     href="/pricing"
@@ -130,10 +139,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
               </ul>
             </div>
 
-            {/* Section 3 — On this page */}
+            {/* Section 3 — Navigations */}
             <div className="sm:pl-2 lg:pl-4">
               <h4 className="font-heading text-[16px] font-semibold text-[#0a0a0a] mb-4 sm:mb-5">
-                On this page
+                Navigations
               </h4>
               <ul className="space-y-3 text-[14px] text-[#525252]">
                 <li>
@@ -208,7 +217,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                   className="btn-dark w-full py-2.5 px-4 text-[13.5px] sm:text-[14px] cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap shadow-xs hover:shadow-md transition-all"
                 >
                   <span>Free AI Consulting</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-[18px] w-[18px]" />
                 </button>
 
                 {/* Button 2: Get Your Free Assessment */}
@@ -237,6 +246,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
 
           {/* Bottom Divider Line */}
           <div className="mt-14 sm:mt-16 border-t border-[#f0f0f0]" />
+
+          {/* Text under divider */}
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-[13px] text-[#525252]">
+            <p className="text-left font-medium text-[#525252]">
+              Need a professional high-converting website like this for your business? Reach out to me!
+            </p>
+            <p className="text-left sm:text-right text-[#737373] whitespace-nowrap">
+              © 2025 AI Launch. All rights reserved.
+            </p>
+          </div>
         </ScrollAnimation>
       </div>
     </footer>

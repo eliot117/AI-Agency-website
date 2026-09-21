@@ -44,8 +44,7 @@ export const Integrations: React.FC<IntegrationsProps> = ({ onNavigateIntegratio
               }}
               classname="saalink-h2-section mb-5"
             >
-              Works with all the tools the business operates{' '}
-              <span style={{ color: 'rgb(0, 86, 255)' }}>with.</span>
+              Works with <span style={{ color: 'rgb(0, 86, 255)' }}>all the tools</span> the business operates with.
             </TextAnimation>
 
             <TextAnimation
@@ -61,7 +60,7 @@ export const Integrations: React.FC<IntegrationsProps> = ({ onNavigateIntegratio
               }}
               classname="saalink-subhead mb-8"
             >
-              Seamlessly connect with the tools your business already uses and automate your workflow.
+              Seamlessly connect with the tools your business already uses and automate your workflows.
             </TextAnimation>
 
             <a

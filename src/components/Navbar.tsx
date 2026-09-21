@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="btn-dark text-[15px] py-2.5 px-6 cursor-pointer flex items-center gap-2 whitespace-nowrap"
           >
             <span>Free AI Consulting</span>
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-[18px] w-[18px]" />
           </button>
         </div>
 
@@ -199,7 +199,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="btn-dark w-full py-3 text-[15px] flex items-center justify-center gap-2"
               >
                 <span>Free AI Consulting</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-[18px] w-[18px]" />
               </button>
             </div>
           </div>

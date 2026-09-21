@@ -6,7 +6,7 @@ import { FAQ } from './FAQ';
 import { FinalCTA } from './FinalCTA';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
-import { useBilling } from '../context/BillingContext';
+import { useSectionBilling } from '../context/BillingContext';
 import { BillingToggle } from './BillingToggle';
 
 interface PricingPageProps {
@@ -269,6 +269,452 @@ const AnimatedPriceRange: React.FC<{ minVal: number; maxVal: number }> = ({ minV
   );
 };
 
+interface PricingCardsSectionProps {
+  plans: Array<{
+    id: string;
+    name: string;
+    subtitle: string;
+    monthlyPrice: number;
+    yearlyPrice: number;
+    ctaText: string;
+    featuresTitle: string;
+    features: string[];
+  }>;
+  onNavigate?: PricingPageProps['onNavigate'];
+  onOpenDemo?: () => void;
+  onBookDemo?: () => void;
+  onSelectPlan: (planName: string) => void;
+}
+
+const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
+  plans,
+  onNavigate,
+  onOpenDemo,
+  onBookDemo,
+  onSelectPlan,
+}) => {
+  const { isYearly, setIsYearly } = useSectionBilling();
+
+  return (
+    <section className="pt-8 sm:pt-12 pb-20 md:pb-28">
+      <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1 mb-8">
+          <button
+            onClick={() => {
+              const el = document.getElementById('compare-plans-2');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
+            title="View full feature comparison table"
+          >
+            <span>Compare plans &amp; features</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+
+          <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch pt-2">
+          {plans.map((plan, index) => {
+            const currentPrice = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
+
+            return (
+              <ScrollAnimation
+                key={plan.id}
+                direction="up"
+                delay={index * 0.1}
+                viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}
+                className="h-full"
+              >
+                <div
+                  className="relative flex flex-col justify-between rounded-[20px] pt-6 px-3.5 sm:px-4 xl:px-5 2xl:px-6 pb-10 sm:pb-12 border-2 border-[#0056ff] transition-all duration-300 h-full w-full"
+                  style={{
+                    background:
+                      'linear-gradient(to bottom, transparent 0%, transparent 45%, #ffffff 70%, #ffffff 100%), radial-gradient(circle at 50% 50%, #ffffff 0%, #ffffff 54%, #f0f6ff 74%, #9dc4ff 90%, #3b82f6 100%)',
+                  }}
+                >
+                  <div className="flex flex-col">
+                    <div className="h-8 sm:h-9 flex items-center justify-center mb-1 text-center w-full">
+                      <h3 className="font-heading font-semibold text-[#0a0a0a] tracking-tight whitespace-nowrap text-center text-[17px] sm:text-[18.5px] md:text-[20px] lg:text-[14.5px] xl:text-[16.5px] 2xl:text-[18.5px]">
+                        {plan.name}
+                      </h3>
+                    </div>
+
+                    <div className="min-h-[46px] sm:min-h-[50px] flex items-start justify-center mb-3 text-center">
+                      <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#525252] font-normal leading-relaxed text-center">
+                        {plan.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="h-10 flex items-baseline mb-5">
+                      {plan.id === 'enterprise' ? (
+                        <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] tracking-tight leading-none">
+                          <AnimatedPriceText text="Custom" isYearly={isYearly} />
+                        </span>
+                      ) : (
+                        <>
+                          <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] leading-none mr-0.5">
+                            $
+                          </span>
+                          <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] tracking-tight leading-none">
+                            {plan.id === 'inbound-agents' ? (
+                              <AnimatedPriceRange minVal={isYearly ? 40 : 50} maxVal={isYearly ? 400 : 500} />
+                            ) : plan.id === 'outbound-agents' ? (
+                              <AnimatedPriceRange minVal={isYearly ? 240 : 300} maxVal={isYearly ? 560 : 700} />
+                            ) : (
+                              <AnimatedPrice value={currentPrice} isYearly={isYearly} />
+                            )}
+                          </span>
+                          <span className="font-['Inter',sans-serif] text-[13.5px] sm:text-[14px] font-normal text-[#525252] ml-1.5">
+                            / month
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-2.5">
+                      <button
+                        onClick={() => {
+                          let targetId = 'compare-plans';
+                          if (plan.id === 'inbound-agents') targetId = 'compare-plans-2';
+                          else if (plan.id === 'outbound-agents') targetId = 'compare-plans-3';
+                          else if (plan.id === 'enterprise') targetId = 'compare-plans-4';
+
+                          const el = document.getElementById(targetId);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                          } else if (onNavigate) {
+                            onNavigate('pricing', `#${targetId}`);
+                          }
+                        }}
+                        className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium bg-[#0056ff] text-white hover:bg-[#0040c0] transition-all duration-200 cursor-pointer text-center"
+                      >
+                        <span>View more</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (onOpenDemo) {
+                            onOpenDemo();
+                          } else if (onBookDemo) {
+                            onBookDemo();
+                          } else if (onNavigate) {
+                            onNavigate('contact', '#book-a-demo');
+                          } else {
+                            onSelectPlan(plan.name);
+                          }
+                        }}
+                        className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium border border-[#e5e5e5] bg-white text-[#0a0a0a] hover:bg-[#fafafa] transition-colors duration-150 cursor-pointer text-center"
+                      >
+                        <span>{plan.ctaText}</span>
+                      </button>
+                    </div>
+
+                    <div className="mt-5 mb-2.5 border-t border-[#e2e8f0]" />
+
+                    <div>
+                      <p className="font-heading font-medium text-[14px] sm:text-[14.5px] text-[#0a0a0a] mb-3.5">
+                        {plan.featuresTitle}
+                      </p>
+                      <ul className="space-y-2.5">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center gap-2.5 text-[13px] sm:text-[13.5px] text-[#525252]">
+                            <div className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#0056ff] text-white">
+                              <Check className="h-2.5 w-2.5 stroke-[2.5]" />
+                            </div>
+                            <span className="leading-snug">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </ScrollAnimation>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const InboundTableSection: React.FC<{
+  renderTableValue: (val: string | boolean) => React.ReactNode;
+}> = ({ renderTableValue }) => {
+  const { isYearly, setIsYearly } = useSectionBilling();
+
+  const inboundColumns = [
+    'AI Agent',
+    'Monthly Capacity',
+    '24/7 Availability',
+    'Team Notifications',
+    'CRM Integrations',
+    'Appointment Booking',
+    'Google Reviews',
+    'Spam Filtering',
+    'Follow Ups',
+    'Advanced Version',
+    'Monitoring & Updates',
+    'Price',
+  ];
+
+  const inboundGroups = [
+    {
+      agent: 'Receptionist',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['100 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $240/mo' : '$50 setup + $300/mo'],
+        },
+        {
+          tier: 'Expert',
+          values: ['500 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✗', '✗', '✓', isYearly ? '$100 setup + $360/mo' : '$100 setup + $450/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $400/mo' : '$100 setup + $500/mo'],
+        },
+      ],
+    },
+    {
+      agent: 'Customer Support',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['100 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $80/mo' : '$50 setup + $100/mo'],
+        },
+        {
+          tier: 'Expert',
+          values: ['500 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✗', '✗', '✓', isYearly ? '$100 setup + $200/mo' : '$100 setup + $250/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $240/mo' : '$100 setup + $300/mo'],
+        },
+      ],
+    },
+    {
+      agent: 'Customer Support',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['100 messages/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $40/mo' : '$50 setup + $50/mo'],
+        },
+        {
+          tier: 'Expert',
+          values: ['500 messages/mo', '✓', 'Advanced', 'Full', '✓', '✓', '✗', '✗', '✗', '✓', isYearly ? '$150 setup + $64/mo' : '$150 setup + $80/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$150 setup + $80/mo' : '$150 setup + $100/mo'],
+        },
+      ],
+    },
+    {
+      agent: 'Spam Filter',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['100 calls/mo', '✓', 'Advanced', '✗', '✗', '✗', '✓', '✗', '✗', '✓', isYearly ? '$50 setup + $16/mo' : '$50 setup + $20/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['Unlimited', '✓', 'Custom', '✗', '✗', '✗', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $40/mo' : '$100 setup + $50/mo'],
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section
+      id="compare-plans-2"
+      className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+    >
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
+          <div className="pill-badge text-[#0056ff] mb-3">
+            <span>Plan Comparison</span>
+          </div>
+          <h2 className="saalink-h2-section text-center">
+            Autonomous Inbound AI Agents
+          </h2>
+        </div>
+
+        <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
+          <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
+        </div>
+
+        <ScrollAnimation direction="up" viewport={{ amount: 0.15, margin: '0px 0px -40px 0px', once: true }}>
+          <div className="w-full pb-4">
+            <div className="w-full relative">
+              <div className="relative z-10 grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center pb-2 pt-1 border-b border-[#e5e5e5] w-full">
+                {inboundColumns.map((col, cIdx) => (
+                  <div key={cIdx} className={cIdx === 0 ? 'pl-2 sm:pl-4 pr-3 sm:pr-4' : cIdx === 11 ? 'text-center pl-0 pr-1' : 'text-center px-1'}>
+                    <span className={`font-heading ${cIdx === 0 ? 'text-[16px] sm:text-[17px] md:text-[18px]' : 'text-[11.5px] sm:text-[12.5px] md:text-[13px]'} font-bold text-[#0a0a0a] block leading-snug`}>
+                      {col || '\u00A0'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {inboundGroups.map((group, gIdx) => (
+                <div key={gIdx} className="relative z-10 w-full mb-3">
+                  <div className="pt-8 pb-3 pl-2 sm:pl-4">
+                    <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
+                      {group.agent}
+                    </h4>
+                  </div>
+
+                  {group.rows.map((row, rIdx) => (
+                    <div
+                      key={rIdx}
+                      className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
+                    >
+                      <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
+                        <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
+                          {row.tier}
+                        </span>
+                      </div>
+                      {row.values.map((val, valIdx) => (
+                        <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
+                          {renderTableValue(val)}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollAnimation>
+      </div>
+    </section>
+  );
+};
+
+const OutboundTableSection: React.FC<{
+  renderTableValue: (val: string | boolean) => React.ReactNode;
+}> = ({ renderTableValue }) => {
+  const { isYearly, setIsYearly } = useSectionBilling();
+
+  const outboundColumns = [
+    'AI Agent',
+    'Monthly Capacity',
+    '24/7 Availability',
+    'Team Notifications',
+    'CRM Integrations',
+    'Appointment Booking',
+    'Google Reviews',
+    'Spam Filtering',
+    'Follow Ups',
+    'Advanced Version',
+    'Monitoring & Updates',
+    'Price',
+  ];
+
+  const outboundGroups = [
+    {
+      agent: 'Lead Call',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['50 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✓', '✗', '✓', isYearly ? '$50 setup + $160/mo' : '$50 setup + $200/mo'],
+        },
+        {
+          tier: 'Expert',
+          values: ['150 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✓', '✗', '✓', isYearly ? '$100 setup + $280/mo' : '$100 setup + $350/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['500 calls/mo', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✓', '✓', '✓', isYearly ? '$100 setup + $400/mo' : '$100 setup + $500/mo'],
+        },
+      ],
+    },
+    {
+      agent: 'Reviews',
+      rows: [
+        {
+          tier: 'Standard',
+          values: ['50 calls/mo', '✓', 'Basic', 'Limited', '✗', '✓', '✗', '✓', '✗', '✓', isYearly ? '$50 setup + $80/mo' : '$50 setup + $100/mo'],
+        },
+        {
+          tier: 'Expert',
+          values: ['150 calls/mo', '✓', 'Advanced', 'Full', '✗', '✓', '✓', '✓', '✗', '✓', isYearly ? '$100 setup + $200/mo' : '$100 setup + $250/mo'],
+        },
+        {
+          tier: 'Advanced',
+          values: ['500 calls/mo', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✓', '✓', '✓', isYearly ? '$100 setup + $240/mo' : '$100 setup + $300/mo'],
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section
+      id="compare-plans-3"
+      className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+    >
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
+          <div className="pill-badge text-[#0056ff] mb-3">
+            <span>Plan Comparison</span>
+          </div>
+          <h2 className="saalink-h2-section text-center">
+            Autonomous Outbound AI Agents
+          </h2>
+        </div>
+
+        <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
+          <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
+        </div>
+
+        <ScrollAnimation direction="up" viewport={{ amount: 0.15, margin: '0px 0px -40px 0px', once: true }}>
+          <div className="w-full pb-4">
+            <div className="w-full relative">
+              <div className="relative z-10 grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center pb-2 pt-1 border-b border-[#e5e5e5] w-full">
+                {outboundColumns.map((col, cIdx) => (
+                  <div key={cIdx} className={cIdx === 0 ? 'pl-2 sm:pl-4 pr-3 sm:pr-4' : cIdx === 11 ? 'text-center pl-0 pr-1' : 'text-center px-1'}>
+                    <span className={`font-heading ${cIdx === 0 ? 'text-[16px] sm:text-[17px] md:text-[18px]' : 'text-[11.5px] sm:text-[12.5px] md:text-[13px]'} font-bold text-[#0a0a0a] block leading-snug`}>
+                      {col || '\u00A0'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {outboundGroups.map((group, gIdx) => (
+                <div key={gIdx} className="relative z-10 w-full mb-3">
+                  <div className="pt-8 pb-3 pl-2 sm:pl-4">
+                    <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
+                      {group.agent}
+                    </h4>
+                  </div>
+
+                  {group.rows.map((row, rIdx) => (
+                    <div
+                      key={rIdx}
+                      className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
+                    >
+                      <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
+                        <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
+                          {row.tier}
+                        </span>
+                      </div>
+                      {row.values.map((val, valIdx) => (
+                        <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
+                          {renderTableValue(val)}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollAnimation>
+      </div>
+    </section>
+  );
+};
+
 export const PricingPage: React.FC<PricingPageProps> = ({
   onOpenDemo,
   onOpenContact,
@@ -276,7 +722,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   onBookDemo,
   onNavigate,
 }) => {
-  const { isYearly } = useBilling();
+  const { isYearly } = useSectionBilling();
 
   const plans = [
     {
@@ -286,7 +732,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 0,
       yearlyPrice: 10,
       popular: false,
-      ctaText: 'Book Your Free Call',
+      ctaText: 'Book a demo',
       featuresTitle: 'Everything in AI Consulting :',
       features: [
         'Free AI business discussion',
@@ -303,7 +749,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 79,
       yearlyPrice: 63,
       popular: true,
-      ctaText: 'See it in action',
+      ctaText: 'Book a demo',
       featuresTitle: 'Everything in Inbound AI Agents :',
       features: [
         '24/7 call & message answering',
@@ -322,7 +768,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 149,
       yearlyPrice: 119,
       popular: false,
-      ctaText: 'See it in action',
+      ctaText: 'Book a demo',
       featuresTitle: 'Everything in Outbound AI Agents :',
       features: [
         'Calls new leads within minutes',
@@ -341,7 +787,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 249,
       yearlyPrice: 199,
       popular: false,
-      ctaText: 'Book a Call',
+      ctaText: 'Book a demo',
       featuresTitle: 'Everything in Full Time (Enterprise) :',
       features: [
         'Full time AI architect',
@@ -505,150 +951,13 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       <PricingPageHero />
 
       {/* 2. PRICING CARDS SECTION */}
-      <section className="pt-8 sm:pt-12 pb-20 md:pb-28">
-        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
-          {/* Controls: Left 'Compare plans' button, Right 'Monthly [switch] Yearly' */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1 mb-8">
-            <button
-              onClick={() => {
-                const el = document.getElementById('compare-plans');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
-              title="View full feature comparison table"
-            >
-              <span>Compare plans &amp; features</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-
-            {/* Monthly / Yearly Switch Toggle */}
-            <BillingToggle />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch pt-2">
-            {plans.map((plan, index) => {
-              const currentPrice = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
-
-              return (
-                <ScrollAnimation
-                  key={plan.id}
-                  direction="up"
-                  delay={index * 0.1}
-                  viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}
-                  className="h-full"
-                >
-                  <div
-                    className="relative flex flex-col justify-between rounded-[20px] pt-6 px-3.5 sm:px-4 xl:px-5 2xl:px-6 pb-10 sm:pb-12 border-2 border-[#0056ff] transition-all duration-300 h-full w-full"
-                    style={{
-                      background:
-                        'linear-gradient(to bottom, transparent 0%, transparent 45%, #ffffff 70%, #ffffff 100%), radial-gradient(circle at 50% 50%, #ffffff 0%, #ffffff 54%, #f0f6ff 74%, #9dc4ff 90%, #3b82f6 100%)',
-                    }}
-                  >
-                    <div className="flex flex-col">
-                      {/* Plan Title - 1 line, uniform size across all cards */}
-                      <div className="h-8 sm:h-9 flex items-center justify-center mb-1 text-center w-full">
-                        <h3 className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[13.5px] xl:text-[15.5px] 2xl:text-[17.5px] font-heading font-semibold text-[#0a0a0a] tracking-tight whitespace-nowrap text-center">
-                          {plan.name}
-                        </h3>
-                      </div>
-
-                      {/* Subtitle - Fixed height container so prices align perfectly */}
-                      <div className="min-h-[46px] sm:min-h-[50px] flex items-start justify-center mb-3 text-center">
-                        <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#525252] font-normal leading-relaxed text-center">
-                          {plan.subtitle}
-                        </p>
-                      </div>
-
-                      {/* Price Block - Fixed height so buttons align perfectly */}
-                      <div className="h-10 flex items-baseline mb-5">
-                        {plan.id === 'enterprise' ? (
-                          <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] tracking-tight leading-none">
-                            <AnimatedPriceText text="Custom" isYearly={isYearly} />
-                          </span>
-                        ) : (
-                          <>
-                            <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] leading-none mr-0.5">
-                              $
-                            </span>
-                            <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] tracking-tight leading-none">
-                              {plan.id === 'inbound-agents' ? (
-                                <AnimatedPriceRange minVal={isYearly ? 40 : 50} maxVal={isYearly ? 400 : 500} />
-                              ) : plan.id === 'outbound-agents' ? (
-                                <AnimatedPriceRange minVal={isYearly ? 240 : 300} maxVal={isYearly ? 560 : 700} />
-                              ) : (
-                                <AnimatedPrice value={currentPrice} isYearly={isYearly} />
-                              )}
-                            </span>
-                            <span className="font-['Inter',sans-serif] text-[13.5px] sm:text-[14px] font-normal text-[#525252] ml-1.5">
-                              / month
-                            </span>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Plan CTA Buttons */}
-                      <div className="flex flex-col gap-2.5">
-                        <button
-                          onClick={() => {
-                            if (plan.id === 'free-ai-consulting') {
-                              if (onNavigate) onNavigate('contact', '#ai-consulting');
-                              else onOpenContact();
-                            } else {
-                              document.getElementById('compare-plans')?.scrollIntoView({ behavior: 'smooth' });
-                            }
-                          }}
-                          className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium bg-[#0056ff] text-white hover:bg-[#0040c0] transition-all duration-200 cursor-pointer text-center"
-                        >
-                          <span>View more</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (plan.id === 'free-ai-consulting') {
-                              if (onNavigate) onNavigate('contact', '#ai-consulting');
-                              else onOpenContact();
-                            } else if (plan.id === 'enterprise') {
-                              if (onBookDemo) onBookDemo();
-                              else if (onNavigate) onNavigate('contact', '#book-a-demo');
-                              else onOpenDemo();
-                            } else {
-                              onOpenDemo();
-                            }
-                          }}
-                          className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium border border-[#e5e5e5] bg-white text-[#0a0a0a] hover:bg-[#fafafa] transition-colors duration-150 cursor-pointer text-center"
-                        >
-                          <span>{plan.ctaText}</span>
-                        </button>
-                      </div>
-
-                      {/* Divider Line */}
-                      <div className="mt-5 mb-2.5 border-t border-[#e2e8f0]" />
-
-                      {/* Features Header & Bullet Points Group */}
-                      <div>
-                        <p className="font-heading font-medium text-[14px] sm:text-[14.5px] text-[#0a0a0a] mb-3.5">
-                          {plan.featuresTitle}
-                        </p>
-                        <ul className="space-y-2.5">
-                          {plan.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center gap-2.5 text-[13px] sm:text-[13.5px] text-[#525252]">
-                              <div className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#0056ff] text-white">
-                                <Check className="h-2.5 w-2.5 stroke-[2.5]" />
-                              </div>
-                              <span className="leading-snug">
-                                {feature}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollAnimation>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <PricingCardsSection
+        plans={plans}
+        onNavigate={onNavigate}
+        onOpenDemo={onOpenDemo}
+        onBookDemo={onBookDemo}
+        onSelectPlan={onSelectPlan}
+      />
 
       {/* 3. FEATURE COMPARISON TABLES (4 Sections) */}
       {[1, 2, 3, 4].map((sectionIndex) => {
@@ -726,283 +1035,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         }
 
         if (sectionIndex === 2) {
-          const inboundColumns = [
-            'AI Agent',
-            'Monthly Capacity',
-            '24/7 Availability',
-            'Team Notifications',
-            'CRM Integrations',
-            'Appointment Booking',
-            'Google Reviews',
-            'Spam Filtering',
-            'Follow Ups',
-            'Advanced Version',
-            'Monitoring & Updates',
-            'Price',
-          ];
-
-          const inboundGroups = [
-            {
-              agent: 'Receptionist',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['100 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $240/mo' : '$50 setup + $300/mo'],
-                },
-                {
-                  tier: 'Expert',
-                  values: ['500 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✗', '✗', '✓', isYearly ? '$100 setup + $360/mo' : '$100 setup + $450/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $400/mo' : '$100 setup + $500/mo'],
-                },
-              ],
-            },
-            {
-              agent: 'Customer Support',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['100 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $80/mo' : '$50 setup + $100/mo'],
-                },
-                {
-                  tier: 'Expert',
-                  values: ['500 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✗', '✗', '✓', isYearly ? '$100 setup + $200/mo' : '$100 setup + $250/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $240/mo' : '$100 setup + $300/mo'],
-                },
-              ],
-            },
-            {
-              agent: 'Customer Support',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['100 messages/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✗', '✗', '✓', isYearly ? '$50 setup + $40/mo' : '$50 setup + $50/mo'],
-                },
-                {
-                  tier: 'Expert',
-                  values: ['500 messages/mo', '✓', 'Advanced', 'Full', '✓', '✓', '✗', '✗', '✗', '✓', isYearly ? '$150 setup + $64/mo' : '$150 setup + $80/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['Unlimited', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✗', '✓', '✓', isYearly ? '$150 setup + $80/mo' : '$150 setup + $100/mo'],
-                },
-              ],
-            },
-            {
-              agent: 'Spam Filter',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['100 calls/mo', '✓', 'Advanced', '✗', '✗', '✗', '✓', '✗', '✗', '✓', isYearly ? '$50 setup + $16/mo' : '$50 setup + $20/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['Unlimited', '✓', 'Custom', '✗', '✗', '✗', '✓', '✗', '✓', '✓', isYearly ? '$100 setup + $40/mo' : '$100 setup + $50/mo'],
-                },
-              ],
-            },
-          ];
-
-          return (
-            <section
-              key={sectionIndex}
-              id="compare-plans-2"
-              className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
-            >
-              <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
-                <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
-                  <div className="pill-badge text-[#0056ff] mb-3">
-                    <span>Plan Comparison</span>
-                  </div>
-                  <h2 className="saalink-h2-section text-center">
-                    Autonomous Inbound AI Agents
-                  </h2>
-                </div>
-
-                <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
-                  <BillingToggle />
-                </div>
-
-                <ScrollAnimation direction="up" viewport={{ amount: 0.15, margin: '0px 0px -40px 0px', once: true }}>
-                  <div className="w-full pb-4">
-                    <div className="w-full relative">
-                      {/* Table Header (12 Columns) */}
-                      <div className="relative z-10 grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center pb-2 pt-1 border-b border-[#e5e5e5] w-full">
-                        {inboundColumns.map((col, cIdx) => (
-                          <div key={cIdx} className={cIdx === 0 ? 'pl-2 sm:pl-4 pr-3 sm:pr-4' : cIdx === 11 ? 'text-center pl-0 pr-1' : 'text-center px-1'}>
-                            <span className={`font-heading ${cIdx === 0 ? 'text-[16px] sm:text-[17px] md:text-[18px]' : 'text-[11.5px] sm:text-[12.5px] md:text-[13px]'} font-bold text-[#0a0a0a] block leading-snug`}>
-                              {col || '\u00A0'}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Table Body Groups */}
-                      {inboundGroups.map((group, gIdx) => (
-                        <div key={gIdx} className="relative z-10 w-full mb-3">
-                          {/* Group Title Row (Blue Row Heading) */}
-                          <div className="pt-8 pb-3 pl-2 sm:pl-4">
-                            <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
-                              {group.agent}
-                            </h4>
-                          </div>
-
-                          {/* Normal Rows (black text / values) */}
-                          {group.rows.map((row, rIdx) => (
-                            <div
-                              key={rIdx}
-                              className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
-                            >
-                              <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
-                                <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
-                                  {row.tier}
-                                </span>
-                              </div>
-                              {row.values.map((val, valIdx) => (
-                                <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
-                                  {renderTableValue(val)}
-                                </div>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </ScrollAnimation>
-              </div>
-            </section>
-          );
+          return <InboundTableSection key={sectionIndex} renderTableValue={renderTableValue} />;
         }
 
         if (sectionIndex === 3) {
-          const outboundColumns = [
-            'AI Agent',
-            'Monthly Capacity',
-            '24/7 Availability',
-            'Team Notifications',
-            'CRM Integrations',
-            'Appointment Booking',
-            'Google Reviews',
-            'Spam Filtering',
-            'Follow Ups',
-            'Advanced Version',
-            'Monitoring & Updates',
-            'Price',
-          ];
-
-          const outboundGroups = [
-            {
-              agent: 'Lead Call',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['50 calls/mo', '✓', 'Basic', 'Limited', '✓', '✗', '✗', '✓', '✗', '✓', isYearly ? '$50 setup + $160/mo' : '$50 setup + $200/mo'],
-                },
-                {
-                  tier: 'Expert',
-                  values: ['150 calls/mo', '✓', 'Advanced', 'Full', '✓', '✗', '✓', '✓', '✗', '✓', isYearly ? '$100 setup + $280/mo' : '$100 setup + $350/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['500 calls/mo', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✓', '✓', '✓', isYearly ? '$100 setup + $400/mo' : '$100 setup + $500/mo'],
-                },
-              ],
-            },
-            {
-              agent: 'Reviews',
-              rows: [
-                {
-                  tier: 'Standard',
-                  values: ['50 calls/mo', '✓', 'Basic', 'Limited', '✗', '✓', '✗', '✓', '✗', '✓', isYearly ? '$50 setup + $80/mo' : '$50 setup + $100/mo'],
-                },
-                {
-                  tier: 'Expert',
-                  values: ['150 calls/mo', '✓', 'Advanced', 'Full', '✗', '✓', '✓', '✓', '✗', '✓', isYearly ? '$100 setup + $200/mo' : '$100 setup + $250/mo'],
-                },
-                {
-                  tier: 'Advanced',
-                  values: ['500 calls/mo', '✓', 'Custom', 'Full', '✓', '✓', '✓', '✓', '✓', '✓', isYearly ? '$100 setup + $240/mo' : '$100 setup + $300/mo'],
-                },
-              ],
-            },
-          ];
-
-          return (
-            <section
-              key={sectionIndex}
-              id="compare-plans-3"
-              className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
-            >
-              <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
-                <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
-                  <div className="pill-badge text-[#0056ff] mb-3">
-                    <span>Plan Comparison</span>
-                  </div>
-                  <h2 className="saalink-h2-section text-center">
-                    Autonomous Outbound AI Agents
-                  </h2>
-                </div>
-
-                <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
-                  <BillingToggle />
-                </div>
-
-                <ScrollAnimation direction="up" viewport={{ amount: 0.15, margin: '0px 0px -40px 0px', once: true }}>
-                  <div className="w-full pb-4">
-                    <div className="w-full relative">
-                      {/* Table Header (12 Columns) */}
-                      <div className="relative z-10 grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center pb-2 pt-1 border-b border-[#e5e5e5] w-full">
-                        {outboundColumns.map((col, cIdx) => (
-                          <div key={cIdx} className={cIdx === 0 ? 'pl-2 sm:pl-4 pr-3 sm:pr-4' : cIdx === 11 ? 'text-center pl-0 pr-1' : 'text-center px-1'}>
-                            <span className={`font-heading ${cIdx === 0 ? 'text-[16px] sm:text-[17px] md:text-[18px]' : 'text-[11.5px] sm:text-[12.5px] md:text-[13px]'} font-bold text-[#0a0a0a] block leading-snug`}>
-                              {col || '\u00A0'}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Table Body Groups */}
-                      {outboundGroups.map((group, gIdx) => (
-                        <div key={gIdx} className="relative z-10 w-full mb-3">
-                          {/* Group Title Row (Blue Row Heading) */}
-                          <div className="pt-8 pb-3 pl-2 sm:pl-4">
-                            <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
-                              {group.agent}
-                            </h4>
-                          </div>
-
-                          {/* Normal Rows (black text / values) */}
-                          {group.rows.map((row, rIdx) => (
-                            <div
-                              key={rIdx}
-                              className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
-                            >
-                              <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
-                                <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
-                                  {row.tier}
-                                </span>
-                              </div>
-                              {row.values.map((val, valIdx) => (
-                                <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
-                                  {renderTableValue(val)}
-                                </div>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </ScrollAnimation>
-              </div>
-            </section>
-          );
+          return <OutboundTableSection key={sectionIndex} renderTableValue={renderTableValue} />;
         }
 
         if (sectionIndex === 4) {

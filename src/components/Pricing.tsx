@@ -4,7 +4,7 @@ import { Check, ArrowRight } from 'lucide-react';
 import { PRICING_PLANS } from '../data';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
-import { useBilling } from '../context/BillingContext';
+import { useSectionBilling } from '../context/BillingContext';
 import { BillingToggle } from './BillingToggle';
 
 interface PricingProps {
@@ -264,7 +264,7 @@ export const Pricing: React.FC<PricingProps> = ({
   onNavigate,
   onOpenDemo,
 }) => {
-  const { isYearly } = useBilling();
+  const { isYearly, setIsYearly } = useSectionBilling();
 
   return (
     <section id="pricing" className="py-20 md:py-28 bg-white">
@@ -276,7 +276,13 @@ export const Pricing: React.FC<PricingProps> = ({
           {/* Controls: Left 'Compare plans' button, Right 'Monthly [switch] Yearly' */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1">
             <button
-              onClick={onOpenCompare}
+              onClick={() => {
+                if (onOpenCompare) {
+                  onOpenCompare();
+                } else if (onNavigate) {
+                  onNavigate('pricing', '#compare-plans-2');
+                }
+              }}
               className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
               title="View full feature comparison table"
             >
@@ -285,7 +291,7 @@ export const Pricing: React.FC<PricingProps> = ({
             </button>
 
             {/* Monthly / Yearly Switch Toggle */}
-            <BillingToggle />
+            <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
           </div>
         </div>
 
@@ -310,9 +316,9 @@ export const Pricing: React.FC<PricingProps> = ({
                   }}
                 >
                   <div className="flex flex-col">
-                    {/* Plan Title - 1 line, uniform size across all cards */}
+                    {/* Plan Title - Individual font sizes tailored to text length */}
                     <div className="h-8 sm:h-9 flex items-center justify-center mb-1 text-center w-full">
-                      <h3 className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[13.5px] xl:text-[15.5px] 2xl:text-[17.5px] font-heading font-semibold text-[#0a0a0a] tracking-tight whitespace-nowrap text-center">
+                      <h3 className="font-heading font-semibold text-[#0a0a0a] tracking-tight whitespace-nowrap text-center text-[17px] sm:text-[18.5px] md:text-[20px] lg:text-[14.5px] xl:text-[16.5px] 2xl:text-[18.5px]">
                         {plan.name}
                       </h3>
                     </div>
@@ -353,12 +359,15 @@ export const Pricing: React.FC<PricingProps> = ({
                     <div className="flex flex-col gap-2.5">
                       <button
                         onClick={() => {
-                          if (plan.id === 'free-ai-consulting') {
-                            if (onNavigate) onNavigate('contact', '#ai-consulting');
-                            else onOpenCompare();
+                          let targetHash = '#compare-plans';
+                          if (plan.id === 'inbound-agents') targetHash = '#compare-plans-2';
+                          else if (plan.id === 'outbound-agents') targetHash = '#compare-plans-3';
+                          else if (plan.id === 'enterprise') targetHash = '#compare-plans-4';
+
+                          if (onNavigate) {
+                            onNavigate('pricing', targetHash);
                           } else {
-                            if (onNavigate) onNavigate('pricing');
-                            else onOpenCompare();
+                            onOpenCompare();
                           }
                         }}
                         className="w-full rounded-[12px] bg-[#0056ff] text-white hover:bg-[#0040c0] py-2.5 px-4 text-center font-heading font-medium text-[14.5px] transition-all duration-200 cursor-pointer"
@@ -367,15 +376,12 @@ export const Pricing: React.FC<PricingProps> = ({
                       </button>
                       <button
                         onClick={() => {
-                          if (plan.id === 'free-ai-consulting') {
-                            if (onNavigate) onNavigate('contact', '#ai-consulting');
-                            else onSelectPlan(plan.name);
-                          } else if (plan.id === 'enterprise') {
-                            if (onNavigate) onNavigate('contact', '#book-a-demo');
-                            else onSelectPlan(plan.name);
+                          if (onOpenDemo) {
+                            onOpenDemo();
+                          } else if (onNavigate) {
+                            onNavigate('contact', '#book-a-demo');
                           } else {
-                            if (onOpenDemo) onOpenDemo();
-                            else onSelectPlan(plan.name);
+                            onSelectPlan(plan.name);
                           }
                         }}
                         className="w-full rounded-[12px] border border-[#e5e5e5] bg-white text-[#0a0a0a] hover:bg-[#fafafa] py-2.5 px-4 text-center font-heading font-medium text-[14.5px] transition-colors duration-150 cursor-pointer"

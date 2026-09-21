@@ -40,7 +40,7 @@ export const HowItWorks: React.FC = () => {
             classname="saalink-h2-section mb-5"
           >
             Three simple steps to{' '}
-            <span style={{ color: 'rgb(0, 86, 255)' }}>more business.</span>
+            <span style={{ color: 'rgb(0, 86, 255)' }}>more appointments.</span>
           </TextAnimation>
 
           <TextAnimation
@@ -56,7 +56,7 @@ export const HowItWorks: React.FC = () => {
             }}
             classname="saalink-subhead max-w-[620px] mx-auto"
           >
-            Get started in minutes and let AI handle the rest so you can focus on growing your agency.
+            Get started in minutes and let AI handle the rest so you can focus on growing your business.
           </TextAnimation>
         </div>
 

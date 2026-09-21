@@ -1,12 +1,21 @@
 import React from 'react';
-import { useBilling } from '../context/BillingContext';
+import { useSectionBilling } from '../context/BillingContext';
 
 interface BillingToggleProps {
   className?: string;
+  isYearly?: boolean;
+  setIsYearly?: (value: boolean | ((prev: boolean) => boolean)) => void;
 }
 
-export const BillingToggle: React.FC<BillingToggleProps> = ({ className = '' }) => {
-  const { isYearly, setIsYearly } = useBilling();
+export const BillingToggle: React.FC<BillingToggleProps> = ({
+  className = '',
+  isYearly: customIsYearly,
+  setIsYearly: customSetIsYearly,
+}) => {
+  const defaultSectionBilling = useSectionBilling();
+
+  const isYearly = customIsYearly !== undefined ? customIsYearly : defaultSectionBilling.isYearly;
+  const setIsYearly = customSetIsYearly !== undefined ? customSetIsYearly : defaultSectionBilling.setIsYearly;
 
   return (
     <div className={`flex items-center gap-3.5 sm:gap-4 select-none ${className}`}>

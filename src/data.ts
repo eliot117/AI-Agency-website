@@ -151,7 +151,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'Find out exactly where AI fits your business.',
     monthlyPrice: 0,
     yearlyPrice: 10,
-    ctaText: 'Book Your Free Call',
+    ctaText: 'Book a demo',
     featuresHeader: 'Everything in AI Consulting :',
     features: [
       'Free AI business discussion',
@@ -167,7 +167,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     monthlyPrice: 79,
     yearlyPrice: 63,
     popular: true,
-    ctaText: 'See it in action',
+    ctaText: 'Book a demo',
     featuresHeader: 'Everything in Inbound AI Agents :',
     features: [
       '24/7 call & message answering',
@@ -184,7 +184,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'Follows up on every enquiry, automatically.',
     monthlyPrice: 149,
     yearlyPrice: 119,
-    ctaText: 'See it in action',
+    ctaText: 'Book a demo',
     featuresHeader: 'Everything in Outbound AI Agents :',
     features: [
       'Calls new leads within minutes',
@@ -201,7 +201,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'For businesses ready to run entirely on AI.',
     monthlyPrice: 249,
     yearlyPrice: 199,
-    ctaText: 'Book a Call',
+    ctaText: 'Book a demo',
     featuresHeader: 'Everything in Full Time (Enterprise) :',
     features: [
       'Full time AI architect',
@@ -254,13 +254,13 @@ export const COMPARISON_CATEGORIES = [
 export const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'faq-1',
-    question: 'What is Ailaunch?',
-    answer: 'Ailaunch is an AI system that answers your calls and messages, follows up automatically, and books appointments for you around the clock, without hiring extra staff.',
+    question: 'What is AI Launch?',
+    answer: 'AI Launch is an AI system that answers your calls and messages, follows up automatically, and books appointments for you around the clock, without hiring extra staff.',
   },
   {
     id: 'faq-2',
-    question: 'Does Ailaunch integrate with my existing tools?',
-    answer: 'Yes. Ailaunch connects with the tools you already use, like your calendar and messaging apps, so everything fits into how you already work.',
+    question: 'Does AI Launch integrate with my existing tools?',
+    answer: 'Yes. AI Launch connects with the tools you already use, like your calendar and messaging apps, so everything fits into how you already work.',
   },
   {
     id: 'faq-3',

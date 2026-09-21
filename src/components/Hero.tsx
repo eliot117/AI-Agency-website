@@ -167,7 +167,7 @@ export const Hero: React.FC<HeroProps> = ({
           animationNum={2}
           className="font-heading text-[18px] sm:text-[20px] font-normal leading-[1.4em] max-w-2xl mx-auto mb-10 text-center text-[#525252]"
         >
-          A receptionist that never sleeps, answers every call and message instantly, and books appointments into your calendar while you&apos;re with a client, closing up, or fast asleep.
+          An AI system that never sleeps, answers every call and messages instantly, and even books appointments into your calendar while you&apos;re busy, with a client, closed, or asleep.
         </TimelineAnimation>
 
         {/* Action Buttons with Matching Underglow/Shadow Animation Design */}
@@ -175,7 +175,7 @@ export const Hero: React.FC<HeroProps> = ({
           <TimelineAnimation timelineRef={heroRef} animationNum={3}>
             <button
               onClick={onOpenGetStarted}
-              className="btn-dark text-[16px] py-3.5 px-8 font-medium cursor-pointer flex items-center justify-center gap-2"
+              className="btn-dark text-[16px] py-3.5 px-8 font-medium cursor-pointer flex items-center justify-center gap-2 w-full sm:w-[180px]"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />
@@ -185,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({
           <TimelineAnimation timelineRef={heroRef} animationNum={4}>
             <button
               onClick={onOpenDemo}
-              className="btn-dark-outline text-[16px] py-3.5 px-8 font-medium cursor-pointer flex items-center justify-center gap-2"
+              className="btn-dark-outline text-[16px] py-3.5 px-8 font-medium cursor-pointer flex items-center justify-center gap-2 w-full sm:w-[180px]"
             >
               <span>Book a Demo</span>
               <ArrowRight className="w-4 h-4" />

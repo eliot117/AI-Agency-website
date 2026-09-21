@@ -80,3 +80,42 @@ export const useBilling = (): BillingContextType => {
   }
   return context;
 };
+
+export const useSectionBilling = () => {
+  const { isYearly: globalIsYearly, setIsYearly: setGlobalIsYearly } = useBilling();
+  const [localIsYearly, setLocalIsYearly] = useState<boolean>(globalIsYearly);
+  const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setLocalIsYearly(globalIsYearly);
+  }, [globalIsYearly]);
+
+  const setSectionIsYearly = (value: boolean | ((prev: boolean) => boolean)) => {
+    setLocalIsYearly((prevLocal) => {
+      const next = typeof value === 'function' ? value(prevLocal) : value;
+
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+
+      timerRef.current = setTimeout(() => {
+        setGlobalIsYearly(next);
+      }, 150);
+
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
+  return {
+    isYearly: localIsYearly,
+    setIsYearly: setSectionIsYearly,
+  };
+};
