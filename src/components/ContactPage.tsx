@@ -581,7 +581,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   Live Chat
                 </h3>
                 <p className="text-[14.5px] sm:text-[15px] text-[#525252] leading-relaxed flex items-center justify-center">
-                  Open the AI chat agent widget
+                  Jay is here to help.
                 </p>
               </div>
             </ScrollAnimation>
