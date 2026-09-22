@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mail, Bot, Phone, MapPin, Check, CheckCircle2, ArrowRight, X, Send, ChevronDown, ChevronLeft, ChevronRight, Calendar, Lock } from 'lucide-react';
+import { Mail, Bot, Phone, MapPin, Check, CheckCircle2, ArrowRight, X, Send, ChevronDown, ChevronLeft, ChevronRight, Calendar, Clock, Lock } from 'lucide-react';
 import { FAQ } from './FAQ';
 import { FinalCTA } from './FinalCTA';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
@@ -131,6 +131,27 @@ const formatYMD = (year: number, month: number, day: number) => {
   return `${year}-${m}-${d}`;
 };
 
+const TIME_SLOTS = [
+  '4:00 PM',
+  '4:30 PM',
+  '5:00 PM',
+  '5:30 PM',
+  '6:00 PM',
+];
+
+const parseDateTimeValue = (val: string) => {
+  if (!val) return { date: '', time: '' };
+  if (val.includes(' at ')) {
+    const [datePart, timePart] = val.split(' at ');
+    return { date: datePart.trim(), time: timePart.trim() };
+  }
+  const parts = val.trim().split(' ');
+  if (parts.length >= 2 && parts[0].includes('-')) {
+    return { date: parts[0], time: parts.slice(1).join(' ') };
+  }
+  return { date: val, time: '' };
+};
+
 const formatDisplayDate = (dateStr: string) => {
   if (!dateStr) return '';
   const [y, m, d] = dateStr.split('-').map(Number);
@@ -142,6 +163,19 @@ const formatDisplayDate = (dateStr: string) => {
     day: 'numeric',
     year: 'numeric',
   });
+};
+
+const formatDisplayDateTime = (val: string) => {
+  if (!val) return '';
+  const { date, time } = parseDateTimeValue(val);
+  const formattedDate = formatDisplayDate(date);
+  if (formattedDate && time) {
+    return `${formattedDate} at ${time}`;
+  }
+  if (formattedDate) {
+    return `${formattedDate} (Select Time)`;
+  }
+  return val;
 };
 
 interface DemoDatePickerProps {
@@ -156,15 +190,22 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
   const today = new Date();
   const todayYMD = formatYMD(today.getFullYear(), today.getMonth(), today.getDate());
 
-  const initialYear = value ? parseInt(value.split('-')[0], 10) : today.getFullYear();
-  const initialMonth = value ? parseInt(value.split('-')[1], 10) - 1 : today.getMonth();
+  const { date: initialDate, time: initialTime } = parseDateTimeValue(value);
+  const [selectedDate, setSelectedDate] = useState(initialDate);
+  const [selectedTime, setSelectedTime] = useState(initialTime);
+
+  const initialYear = initialDate ? parseInt(initialDate.split('-')[0], 10) : today.getFullYear();
+  const initialMonth = initialDate ? parseInt(initialDate.split('-')[1], 10) - 1 : today.getMonth();
 
   const [viewYear, setViewYear] = useState(initialYear);
   const [viewMonth, setViewMonth] = useState(initialMonth);
 
   useEffect(() => {
-    if (value) {
-      const [y, m] = value.split('-').map(Number);
+    const { date, time } = parseDateTimeValue(value);
+    setSelectedDate(date);
+    setSelectedTime(time);
+    if (date) {
+      const [y, m] = date.split('-').map(Number);
       if (y && m) {
         setViewYear(y);
         setViewMonth(m - 1);
@@ -217,11 +258,28 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
   const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
+  const handleSelectDate = (dateStr: string) => {
+    setSelectedDate(dateStr);
+    setSelectedTime('');
+    onChange(dateStr);
+  };
+
+  const handleSelectTime = (slot: string) => {
+    setSelectedTime(slot);
+    const activeDate = selectedDate || todayYMD;
+    if (!selectedDate) {
+      setSelectedDate(todayYMD);
+    }
+    onChange(`${activeDate} at ${slot}`);
+    setIsOpen(false);
+  };
+
   const setDateToday = () => {
-    onChange(todayYMD);
+    setSelectedDate(todayYMD);
+    setSelectedTime('');
     setViewYear(today.getFullYear());
     setViewMonth(today.getMonth());
-    setIsOpen(false);
+    onChange(todayYMD);
   };
 
   const setDateTomorrow = () => {
@@ -232,9 +290,17 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
       tomorrow.getMonth(),
       tomorrow.getDate()
     );
-    onChange(tomorrowYMD);
+    setSelectedDate(tomorrowYMD);
+    setSelectedTime('');
     setViewYear(tomorrow.getFullYear());
     setViewMonth(tomorrow.getMonth());
+    onChange(tomorrowYMD);
+  };
+
+  const handleClear = () => {
+    setSelectedDate('');
+    setSelectedTime('');
+    onChange('');
     setIsOpen(false);
   };
 
@@ -257,15 +323,15 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
           }`}
         />
         <span className={value ? 'text-[#0a0a0a] font-medium' : 'text-[#9e9e9e]'}>
-          {value ? formatDisplayDate(value) : 'Select Date'}
+          {value ? formatDisplayDateTime(value) : 'Select Date and Time'}
         </span>
       </button>
 
       {isOpen && (
         <div
           role="dialog"
-          aria-label="Calendar date picker"
-          className="absolute left-0 top-[calc(100%+6px)] z-50 w-full sm:w-[320px] rounded-[16px] border border-[#e5e5e5] bg-white p-4 shadow-xl shadow-black/8 animate-in fade-in zoom-in-95 duration-150"
+          aria-label="Calendar date and time picker"
+          className="absolute left-0 bottom-[calc(100%+8px)] z-50 w-full sm:w-[328px] rounded-[16px] border border-[#e5e5e5] bg-white p-4 shadow-xl shadow-black/10 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
@@ -314,7 +380,7 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
             {Array.from({ length: daysInMonth }).map((_, i) => {
               const dayNum = i + 1;
               const dateStr = formatYMD(viewYear, viewMonth, dayNum);
-              const isSelected = value === dateStr;
+              const isSelected = selectedDate === dateStr;
               const isToday = todayYMD === dateStr;
               const isPast = dateStr < todayYMD;
 
@@ -323,10 +389,7 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
                   key={dayNum}
                   type="button"
                   disabled={isPast}
-                  onClick={() => {
-                    onChange(dateStr);
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handleSelectDate(dateStr)}
                   className={`h-8.5 w-8.5 mx-auto flex items-center justify-center rounded-[10px] text-[13px] font-medium transition-all ${
                     isSelected
                       ? 'bg-[#0056ff] text-white font-semibold shadow-xs'
@@ -343,8 +406,46 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
             })}
           </div>
 
+          {/* Time intervals */}
+          <div className="mt-3.5 pt-3 border-t border-[#f2f2f2]">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[12.5px] font-semibold text-[#0a0a0a] flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-[#0056ff]" />
+                Select Time
+              </span>
+              {!selectedDate && (
+                <span className="text-[11.5px] text-[#737373]">
+                  Choose date first
+                </span>
+              )}
+            </div>
+
+            <div className="grid grid-cols-3 gap-1.5">
+              {TIME_SLOTS.map((slot) => {
+                const isSelected = selectedTime === slot;
+                return (
+                  <button
+                    key={slot}
+                    type="button"
+                    disabled={!selectedDate}
+                    onClick={() => handleSelectTime(slot)}
+                    className={`py-1.5 px-2 rounded-[8px] border text-[12px] font-medium transition-all text-center cursor-pointer ${
+                      !selectedDate
+                        ? 'opacity-40 border-[#e5e5e5] bg-[#fafafa] cursor-not-allowed text-[#9e9e9e]'
+                        : isSelected
+                        ? 'border-[#0056ff] bg-[#0056ff] text-white shadow-xs font-semibold'
+                        : 'border-[#e5e5e5] bg-white text-[#374151] hover:border-[#0056ff]/50 hover:bg-[#0056ff]/5 hover:text-[#0056ff]'
+                    }`}
+                  >
+                    {slot}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Quick Action Footer */}
-          <div className="mt-3.5 pt-2.5 border-t border-[#f2f2f2] flex items-center justify-between text-[12px]">
+          <div className="mt-3 pt-2.5 border-t border-[#f2f2f2] flex items-center justify-between text-[12px]">
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
@@ -364,10 +465,7 @@ const DemoDatePicker: React.FC<DemoDatePickerProps> = ({ value, onChange }) => {
             {value && (
               <button
                 type="button"
-                onClick={() => {
-                  onChange('');
-                  setIsOpen(false);
-                }}
+                onClick={handleClear}
                 className="text-[#9e9e9e] hover:text-[#ef4444] transition-colors font-medium cursor-pointer"
               >
                 Clear
@@ -401,6 +499,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const [demoCompanySize, setDemoCompanySize] = useState('');
   const [demoInterests, setDemoInterests] = useState<string[]>([]);
   const [demoDate, setDemoDate] = useState('');
+  const [demoNotes, setDemoNotes] = useState('');
   const [demoAssessmentCompleted, setDemoAssessmentCompleted] = useState<'yes' | 'no' | ''>('');
   const [showAssessmentModal, setShowAssessmentModal] = useState(false);
   const [assessmentStep, setAssessmentStep] = useState(1);
@@ -466,6 +565,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           interests: demoInterests,
           preferred_meeting_date: demoDate,
           completed_assessment: demoAssessmentCompleted,
+          notes: demoNotes,
         }),
       });
 
@@ -862,10 +962,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         </div>
                       </div>
 
-                      {/* Preferred Online Meeting Date */}
+                      {/* Preferred Online Meeting Date and Time */}
                       <div className="flex flex-col gap-1.5">
                         <label className="font-heading text-[16px] font-medium text-[#0a0a0a]">
-                          Preferred Online Meeting Date
+                          Preferred Online Meeting Date and Time
                         </label>
                         <DemoDatePicker
                           value={demoDate}
@@ -955,6 +1055,20 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                             </div>
                           </div>
                         )}
+                      </div>
+
+                      {/* Additional Notes or Message */}
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-heading text-[16px] font-medium text-[#0a0a0a]">
+                          Additional Notes or Message
+                        </label>
+                        <textarea
+                          rows={3}
+                          value={demoNotes}
+                          onChange={(e) => setDemoNotes(e.target.value)}
+                          placeholder="Share any specific notes, questions, or topics you'd like to cover..."
+                          className="w-full rounded-[12px] border border-[#f2f2f2] bg-[#fefefe] px-4 py-3 text-[14px] text-[#0a0a0a] placeholder-[#9e9e9e] transition-all outline-none focus:border-[#0056ff] focus:ring-1 focus:ring-[#0056ff] resize-y"
+                        />
                       </div>
 
                       {/* Submit Button */}

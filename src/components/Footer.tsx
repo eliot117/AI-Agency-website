@@ -246,10 +246,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
           {/* Text under divider */}
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-[13px] text-[#525252]">
             <p className="text-left font-medium text-[#525252]">
-              Need a professional high-converting website like this for your business? Reach out to me!
+              Need a professional high-converting website like this for your business?{' '}
+              <a
+                href="/contact#contact-form"
+                onClick={handleLinkClick('contact', '#contact-form')}
+                className="text-[#0056ff] underline font-semibold cursor-pointer"
+              >
+                Reach out to us!
+              </a>
             </p>
             <p className="text-left sm:text-right text-[#737373] whitespace-nowrap">
-              © 2025 AI Launch. All rights reserved.
+              © 2026 AI Launch. All rights reserved.
             </p>
           </div>
         </ScrollAnimation>
