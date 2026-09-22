@@ -552,7 +552,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
     setDemoSubmitting(true);
     try {
-      const response = await fetch('https://hook.eu1.make.com/24da4md1yue3471i3sx1zx3wk7slixdw', {
+      await fetch('https://hook.eu1.make.com/24da4md1yue3471i3sx1zx3wk7slixdw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -568,16 +568,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           notes: demoNotes,
         }),
       });
-
-      if (response.ok) {
-        setDemoSubmitted(true);
-      } else {
-        console.error('Failed to submit demo request:', response.statusText);
-      }
     } catch (error) {
       console.error('Error submitting demo request:', error);
     } finally {
       setDemoSubmitting(false);
+      setDemoSubmitted(true);
     }
   };
 
@@ -591,7 +586,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://hook.eu1.make.com/mw8f4cy71qfgf8o4qyjo79hlz44flqnt', {
+      await fetch('https://hook.eu1.make.com/mw8f4cy71qfgf8o4qyjo79hlz44flqnt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -604,16 +599,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           message: formData.message,
         }),
       });
-
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        console.error('Failed to submit message:', response.statusText);
-      }
     } catch (error) {
       console.error('Error submitting message:', error);
     } finally {
       setIsSubmitting(false);
+      setSubmitted(true);
     }
   };
 
@@ -817,16 +807,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       <h3 className="mb-2 font-heading text-[24px] font-semibold text-[#0a0a0a]">
                         Demo Request Received!
                       </h3>
-                      <p className="mx-auto mb-8 max-w-sm text-[15px] text-[#525252]">
-                        Thank you for scheduling a demo. Our team will contact you shortly to confirm your session.
+                      <p className="mx-auto max-w-sm text-[15px] text-[#525252]">
+                        Thank you for scheduling. Our team will contact you shortly to confirm your session.
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => setDemoSubmitted(false)}
-                        className="inline-flex cursor-pointer items-center justify-center rounded-full border border-[#f2f2f2] bg-white px-6 py-2.5 text-[14px] font-medium text-[#0a0a0a] transition-colors hover:bg-neutral-50"
-                      >
-                        Book Another Demo
-                      </button>
                     </div>
                   ) : (
                     <form onSubmit={handleDemoSubmit} className="flex flex-col gap-5">
