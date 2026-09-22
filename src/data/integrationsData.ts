@@ -1147,7 +1147,7 @@ export const INTEGRATIONS_DATA: IntegrationItem[] = [
       "outlook",
       "teams"
     ],
-    "logoUrl": "/logos/zoom.svg"
+    "logoUrl": "/logos/zoom.png"
   },
   {
     "slug": "outlook",

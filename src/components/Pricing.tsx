@@ -372,7 +372,7 @@ export const Pricing: React.FC<PricingProps> = ({
                         }}
                         className="w-full rounded-[12px] bg-[#0056ff] text-white hover:bg-[#0040c0] py-2.5 px-4 text-center font-heading font-medium text-[14.5px] transition-all duration-200 cursor-pointer"
                       >
-                        <span>View more</span>
+                        <span>View More</span>
                       </button>
                       <button
                         onClick={() => {
@@ -386,7 +386,7 @@ export const Pricing: React.FC<PricingProps> = ({
                         }}
                         className="w-full rounded-[12px] border border-[#e5e5e5] bg-white text-[#0a0a0a] hover:bg-[#fafafa] py-2.5 px-4 text-center font-heading font-medium text-[14.5px] transition-colors duration-150 cursor-pointer"
                       >
-                        <span>{plan.ctaText}</span>
+                        <span>Book a Demo</span>
                       </button>
                     </div>
 

@@ -1,6 +1,7 @@
 import { BentoCard, FAQItem, PricingPlan, StepItem, Testimonial } from './types';
 
 export const NAV_LINKS = [
+  { label: 'Services', href: '/services' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Integrations', href: '/integrations' },
   { label: 'Contact', href: '#contact' },
@@ -151,7 +152,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'Find out exactly where AI fits your business.',
     monthlyPrice: 0,
     yearlyPrice: 10,
-    ctaText: 'Book a demo',
+    ctaText: 'Book a Demo',
     featuresHeader: 'Everything in AI Consulting :',
     features: [
       'Free AI business discussion',
@@ -167,7 +168,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     monthlyPrice: 79,
     yearlyPrice: 63,
     popular: true,
-    ctaText: 'Book a demo',
+    ctaText: 'Book a Demo',
     featuresHeader: 'Everything in Inbound AI Agents :',
     features: [
       '24/7 call & message answering',
@@ -184,7 +185,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'Follows up on every enquiry, automatically.',
     monthlyPrice: 149,
     yearlyPrice: 119,
-    ctaText: 'Book a demo',
+    ctaText: 'Book a Demo',
     featuresHeader: 'Everything in Outbound AI Agents :',
     features: [
       'Calls new leads within minutes',
@@ -201,7 +202,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     subtitle: 'For businesses ready to run entirely on AI.',
     monthlyPrice: 249,
     yearlyPrice: 199,
-    ctaText: 'Book a demo',
+    ctaText: 'Book a Demo',
     featuresHeader: 'Everything in Full Time (Enterprise) :',
     features: [
       'Full time AI architect',

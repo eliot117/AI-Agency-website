@@ -6,8 +6,8 @@ import { SaalinkLogo } from './Logos';
 interface NavbarProps {
   onOpenDemo: () => void;
   onOpenContact: () => void;
-  currentPage?: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'contact';
-  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'contact', hashOrSlug?: string) => void;
+  currentPage?: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact';
+  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact', hashOrSlug?: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -39,6 +39,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       setMobileMenuOpen(false);
       return;
     }
+    if (link.label === 'Services' || link.label === 'AI Agents & Plans') {
+      if (onNavigate) {
+        onNavigate('services');
+      } else {
+        window.history.pushState(null, '', '/services');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }
+      setMobileMenuOpen(false);
+      return;
+    }
     if (link.label === 'Integrations') {
       if (onNavigate) {
         onNavigate('integrations');
@@ -63,6 +73,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const isLinkActive = (label: string) => {
     if (label === 'Pricing') return currentPage === 'pricing';
+    if (label === 'Services' || label === 'AI Agents & Plans') {
+      return (
+        currentPage === 'services' ||
+        currentPage === 'service-detail' ||
+        currentPage === 'integrations-2' ||
+        currentPage === 'integration-detail-2'
+      );
+    }
     if (label === 'Integrations') return currentPage === 'integrations' || currentPage === 'integration-detail';
     if (label === 'Contact') return currentPage === 'contact';
     return false;

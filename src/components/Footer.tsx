@@ -6,11 +6,11 @@ import { openRetellChat } from '@/lib/retell';
 
 interface FooterProps {
   onOpenContact: () => void;
-  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'contact', hashOrSlug?: string) => void;
+  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact', hashOrSlug?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => {
-  const handleLinkClick = (page: 'home' | 'pricing' | 'integrations' | 'contact', hash?: string) => (e: React.MouseEvent) => {
+  const handleLinkClick = (page: 'home' | 'pricing' | 'integrations' | 'services' | 'integrations-2' | 'contact', hash?: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
       onNavigate(page, hash);
@@ -44,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
               >
                 <SaalinkLogo />
               </a>
-              <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[#525252] max-w-[290px] mb-4">
+              <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[#525252] w-[210px] mb-4">
                 Turn missed calls into booked appointments, automatically. Built for local businesses ready to put their follow ups on autopilot.
               </p>
 
@@ -81,8 +81,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                 {/* Icon Button 3: Chat */}
                 <button
                   onClick={handleChatClick}
-                  aria-label="Open AI Chat Agent"
-                  title="Open AI Chat Agent"
+                  aria-label="Open Customer Support AI Agent Widget"
+                  title="Open Customer Support AI Agent Widget"
                   className="flex-1 h-11 flex items-center justify-center rounded-[10px] border border-[#f0f0f0] bg-white text-[#525252] shadow-xs transition-colors hover:border-[#0056ff] hover:text-[#0056ff] cursor-pointer"
                 >
                   <MessageSquare className="h-5 w-5" />
@@ -103,6 +103,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                     className="hover:text-[#0056ff] transition-colors cursor-pointer"
                   >
                     Home
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/services"
+                    onClick={handleLinkClick('services')}
+                    className="hover:text-[#0056ff] transition-colors cursor-pointer"
+                  >
+                    Services
                   </a>
                 </li>
                 <li>
@@ -175,6 +184,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
                     className="hover:text-[#0056ff] transition-colors cursor-pointer"
                   >
                     How It Works
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#services"
+                    onClick={handleLinkClick('home', '#services')}
+                    className="hover:text-[#0056ff] transition-colors cursor-pointer"
+                  >
+                    Services
                   </a>
                 </li>
                 <li>

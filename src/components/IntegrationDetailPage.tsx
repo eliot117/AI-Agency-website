@@ -154,6 +154,7 @@ export const IntegrationDetailPage: React.FC<IntegrationDetailPageProps> = ({
                           'zoho-crm',
                           'notion',
                           'telegram',
+                          'zoom',
                         ];
                         const ext = pngSlugs.includes(item.slug) ? 'png' : 'svg';
                         const fallback = `/logos/${item.slug}.${ext}`;

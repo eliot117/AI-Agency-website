@@ -8,13 +8,14 @@ import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
 import { useSectionBilling } from '../context/BillingContext';
 import { BillingToggle } from './BillingToggle';
+import { ServicesSection } from './ServicesSection';
 
 interface PricingPageProps {
   onOpenDemo: () => void;
   onOpenContact: () => void;
   onSelectPlan: (planName: string) => void;
   onBookDemo?: () => void;
-  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'contact', hashOrSlug?: string) => void;
+  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact', hashOrSlug?: string) => void;
 }
 
 const HERO_TAG_VARIANTS = {
@@ -389,7 +390,7 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
                         }}
                         className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium bg-[#0056ff] text-white hover:bg-[#0040c0] transition-all duration-200 cursor-pointer text-center"
                       >
-                        <span>View more</span>
+                        <span>View More</span>
                       </button>
                       <button
                         onClick={() => {
@@ -405,7 +406,7 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
                         }}
                         className="w-full py-2.5 px-4 rounded-[12px] font-heading text-[14.5px] font-medium border border-[#e5e5e5] bg-white text-[#0a0a0a] hover:bg-[#fafafa] transition-colors duration-150 cursor-pointer text-center"
                       >
-                        <span>{plan.ctaText}</span>
+                        <span>Book a Demo</span>
                       </button>
                     </div>
 
@@ -476,7 +477,7 @@ const InboundTableSection: React.FC<{
       ],
     },
     {
-      agent: 'Customer Support',
+      agent: 'Customer Support AI Call Agent',
       rows: [
         {
           tier: 'Standard',
@@ -493,7 +494,7 @@ const InboundTableSection: React.FC<{
       ],
     },
     {
-      agent: 'Customer Support',
+      agent: 'Customer Support AI Agent Widget',
       rows: [
         {
           tier: 'Standard',
@@ -556,33 +557,44 @@ const InboundTableSection: React.FC<{
                 ))}
               </div>
 
-              {inboundGroups.map((group, gIdx) => (
-                <div key={gIdx} className="relative z-10 w-full mb-3">
-                  <div className="pt-8 pb-3 pl-2 sm:pl-4">
-                    <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
-                      {group.agent}
-                    </h4>
-                  </div>
+              {inboundGroups.map((group, gIdx) => {
+                const groupAnchorId =
+                  gIdx === 0
+                    ? 'receptionist-pricing'
+                    : gIdx === 1
+                    ? 'customer-support-voice-pricing'
+                    : gIdx === 2
+                    ? 'customer-support-chat-pricing'
+                    : 'spam-filter-pricing';
 
-                  {group.rows.map((row, rIdx) => (
-                    <div
-                      key={rIdx}
-                      className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
-                    >
-                      <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
-                        <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
-                          {row.tier}
-                        </span>
-                      </div>
-                      {row.values.map((val, valIdx) => (
-                        <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
-                          {renderTableValue(val)}
-                        </div>
-                      ))}
+                return (
+                  <div key={gIdx} id={groupAnchorId} className="relative z-10 w-full mb-3 scroll-mt-28">
+                    <div className="pt-8 pb-3 pl-2 sm:pl-4">
+                      <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
+                        {group.agent}
+                      </h4>
                     </div>
-                  ))}
-                </div>
-              ))}
+
+                    {group.rows.map((row, rIdx) => (
+                      <div
+                        key={rIdx}
+                        className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
+                      >
+                        <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
+                          <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
+                            {row.tier}
+                          </span>
+                        </div>
+                        {row.values.map((val, valIdx) => (
+                          <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
+                            {renderTableValue(val)}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </ScrollAnimation>
@@ -680,33 +692,38 @@ const OutboundTableSection: React.FC<{
                 ))}
               </div>
 
-              {outboundGroups.map((group, gIdx) => (
-                <div key={gIdx} className="relative z-10 w-full mb-3">
-                  <div className="pt-8 pb-3 pl-2 sm:pl-4">
-                    <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
-                      {group.agent}
-                    </h4>
-                  </div>
+              {outboundGroups.map((group, gIdx) => {
+                const groupAnchorId =
+                  gIdx === 0 ? 'lead-call-pricing' : 'reviews-pricing';
 
-                  {group.rows.map((row, rIdx) => (
-                    <div
-                      key={rIdx}
-                      className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
-                    >
-                      <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
-                        <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
-                          {row.tier}
-                        </span>
-                      </div>
-                      {row.values.map((val, valIdx) => (
-                        <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
-                          {renderTableValue(val)}
-                        </div>
-                      ))}
+                return (
+                  <div key={gIdx} id={groupAnchorId} className="relative z-10 w-full mb-3 scroll-mt-28">
+                    <div className="pt-8 pb-3 pl-2 sm:pl-4">
+                      <h4 className="font-heading text-[14px] sm:text-[15px] font-semibold text-[#0056ff]">
+                        {group.agent}
+                      </h4>
                     </div>
-                  ))}
-                </div>
-              ))}
+
+                    {group.rows.map((row, rIdx) => (
+                      <div
+                        key={rIdx}
+                        className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
+                      >
+                        <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
+                          <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
+                            {row.tier}
+                          </span>
+                        </div>
+                        {row.values.map((val, valIdx) => (
+                          <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
+                            {renderTableValue(val)}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </ScrollAnimation>
@@ -732,7 +749,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 0,
       yearlyPrice: 10,
       popular: false,
-      ctaText: 'Book a demo',
+      ctaText: 'Book a Demo',
       featuresTitle: 'Everything in AI Consulting :',
       features: [
         'Free AI business discussion',
@@ -749,7 +766,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 79,
       yearlyPrice: 63,
       popular: true,
-      ctaText: 'Book a demo',
+      ctaText: 'Book a Demo',
       featuresTitle: 'Everything in Inbound AI Agents :',
       features: [
         '24/7 call & message answering',
@@ -768,7 +785,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 149,
       yearlyPrice: 119,
       popular: false,
-      ctaText: 'Book a demo',
+      ctaText: 'Book a Demo',
       featuresTitle: 'Everything in Outbound AI Agents :',
       features: [
         'Calls new leads within minutes',
@@ -787,7 +804,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       monthlyPrice: 249,
       yearlyPrice: 199,
       popular: false,
-      ctaText: 'Book a demo',
+      ctaText: 'Book a Demo',
       featuresTitle: 'Everything in Full Time (Enterprise) :',
       features: [
         'Full time AI architect',
@@ -957,6 +974,27 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         onOpenDemo={onOpenDemo}
         onBookDemo={onBookDemo}
         onSelectPlan={onSelectPlan}
+      />
+
+      {/* 2.5 SERVICES (AI AGENTS & PLANS) GRID SECTION */}
+      <ServicesSection
+        onNavigateIntegrations={() => {
+          if (onNavigate) {
+            onNavigate('services');
+          }
+        }}
+        onSelectIntegration={(slug) => {
+          if (onNavigate) {
+            onNavigate('service-detail', slug);
+          }
+        }}
+        onBookDemo={() => {
+          if (onNavigate) {
+            onNavigate('contact', '#book-a-demo');
+          } else if (onBookDemo) {
+            onBookDemo();
+          }
+        }}
       />
 
       {/* 3. FEATURE COMPARISON TABLES (4 Sections) */}

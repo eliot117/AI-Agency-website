@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import {
-  INTEGRATIONS_DATA,
-  INTEGRATION_CATEGORIES,
-  IntegrationCategory,
-  IntegrationItem,
-} from '../data/integrationsData';
+  SERVICES_DATA,
+  SERVICE_CATEGORIES,
+  AgentOrPlanItem,
+  ServiceCategory,
+} from '../data/servicesData';
 import { IntegrationCard } from './IntegrationCard';
 import { FAQ } from './FAQ';
 import { FinalCTA } from './FinalCTA';
 import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
 
-interface IntegrationsListingPageProps {
+export interface ServicesListingPageProps {
   onSelectIntegration: (slug: string) => void;
   onOpenDemo: () => void;
   onOpenContact: () => void;
   onBookDemo?: () => void;
 }
+
+export type IntegrationsListingPage2Props = ServicesListingPageProps;
 
 const HERO_TAG_VARIANTS = {
   hidden: { filter: 'blur(8px)', opacity: 0, y: 15 },
@@ -28,42 +30,28 @@ const HERO_TAG_VARIANTS = {
   },
 };
 
-export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = ({
+export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
   onSelectIntegration,
   onOpenDemo,
   onOpenContact,
   onBookDemo,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<IntegrationCategory>('All');
-  const [visibleCount, setVisibleCount] = useState<number>(9);
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory>('All');
 
-  // Filter integrations by category
-  const filteredIntegrations = INTEGRATIONS_DATA.filter((item) => {
+  // Filter services by category
+  const filteredIntegrations = SERVICES_DATA.filter((item) => {
     if (selectedCategory === 'All') return true;
-    if (selectedCategory === 'Marketing & Analytics') {
-      return item.category === 'CMS' || item.slug === 'hubspot' || item.slug === 'salesforce';
-    }
     return item.category === selectedCategory;
   });
 
-  const displayedIntegrations =
-    selectedCategory === 'All'
-      ? filteredIntegrations.slice(0, visibleCount)
-      : filteredIntegrations;
-
-  const handleCategoryChange = (cat: IntegrationCategory) => {
+  const handleCategoryChange = (cat: ServiceCategory) => {
     setSelectedCategory(cat);
-    setVisibleCount(9);
   };
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 15);
-  };
-
-  // Preview logo tools for the hero strip (ChatGPT, Teams, Google Calendar, HubSpot, Outlook, OneDrive)
-  const heroLogos = ['openai', 'teams', 'google-calendar', 'hubspot', 'outlook', 'onedrive']
-    .map((slug) => INTEGRATIONS_DATA.find((item) => item.slug === slug))
-    .filter((item): item is IntegrationItem => Boolean(item));
+  // Preview logo tools for the hero strip in order: Widget, Review, Receptionist, customer service Call, lead, Spam
+  const heroLogos = ['wise', 'zoho-crm', 'paypal', 'razorpay', 'pipedrive', 'stripe']
+    .map((slug) => SERVICES_DATA.find((item) => item.slug === slug))
+    .filter((item): item is AgentOrPlanItem => Boolean(item));
 
   return (
     <div className="min-h-screen bg-white text-[#0a0a0a]">
@@ -86,7 +74,7 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
               <div className="mb-6 flex justify-center">
                 <TextAnimation variants={HERO_TAG_VARIANTS}>
                   <div className="pill-badge text-[#0056ff]">
-                    <span>POWERFUL INTEGRATIONS</span>
+                    <span>INFORMED SERVICES</span>
                   </div>
                 </TextAnimation>
               </div>
@@ -105,7 +93,7 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
                 }}
                 classname="mb-4 font-heading text-[40px] font-semibold tracking-tight text-[#0a0a0a] sm:text-[56px] md:text-[64px]"
               >
-                Integrations
+                Services
               </TextAnimation>
 
               {/* Subhead */}
@@ -122,11 +110,10 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
                 }}
                 classname="max-w-2xl text-[16px] leading-relaxed text-[#525252] sm:text-[18px]"
               >
-                Connect AI, productivity, communication, and payment tools to create powerful
-                workflows that work together seamlessly.
+                Every AI agent and plan AI Launch offers, built to run your business on autopilot.
               </TextAnimation>
 
-              {/* Hero 6 Floating Tool Logos Strip */}
+              {/* Hero Floating Tool Logos Strip */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4.5">
                 {heroLogos.map((tool, index) => {
                   const isFirst = index === 0;
@@ -149,37 +136,13 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
                       onClick={() => onSelectIntegration(tool.slug)}
                       title={tool.name}
                       style={maskStyle}
-                      className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center overflow-hidden rounded-[18px] sm:rounded-[20px] border border-[#f2f2f2] bg-white p-1.5 sm:p-2 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] transition-all duration-200 hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0px_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
+                      className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center overflow-hidden rounded-[18px] sm:rounded-[20px] border border-[#d6e9f0] bg-[#d6e9f0] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-[0px_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
                     >
                       <img
                         src={tool.logoUrl}
                         alt={`${tool.name} logo`}
-                        className="h-full w-full object-contain"
+                        className="h-full w-full object-cover block"
                         referrerPolicy="no-referrer"
-                        onError={(e) => {
-                          const img = e.currentTarget;
-                          const pngSlugs = [
-                            'google-drive',
-                            'gmail',
-                            'google-docs',
-                            'google-sheets',
-                            'google-meet',
-                            'google-calendar',
-                            'google-slides',
-                            'zoho-crm',
-                            'pipedream',
-                            'notion',
-                            'slack',
-                            'telegram',
-                            'anthropic',
-                            'zoom',
-                          ];
-                          const ext = pngSlugs.includes(tool.slug) ? 'png' : 'svg';
-                          const fallback = `/logos/${tool.slug}.${ext}`;
-                          if (img.src !== fallback && !img.src.endsWith(fallback)) {
-                            img.src = fallback;
-                          }
-                        }}
                       />
                     </button>
                   );
@@ -196,7 +159,7 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
           {/* Category Filter Tabs */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
             <div className="mb-12 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
-              {INTEGRATION_CATEGORIES.map((category) => {
+              {SERVICE_CATEGORIES.map((category) => {
                 const isActive = selectedCategory === category;
                 return (
                   <button
@@ -217,7 +180,7 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-3">
-            {displayedIntegrations.map((item, index) => (
+            {filteredIntegrations.map((item, index) => (
               <ScrollAnimation
                 key={item.slug}
                 direction="up"
@@ -226,24 +189,27 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
                 className="h-full"
               >
                 <IntegrationCard
-                  item={item}
+                  item={{
+                    slug: item.slug,
+                    name: item.name,
+                    category: item.category,
+                    shortDescription: item.shortDescription,
+                    installUrl: item.buttonLink,
+                    logoUrl: item.logoUrl,
+                    whatIsHeading: item.whatHeading,
+                    whatIsText: item.whatText,
+                    benefitsHeading: item.includedHeading,
+                    benefits: [],
+                    howToConnectHeading: item.howHeading || '',
+                    howToConnectSteps: [],
+                    popularTools: item.popularTools,
+                  }}
                   onViewDetails={onSelectIntegration}
+                  onBookDemo={onBookDemo || onOpenDemo}
                 />
               </ScrollAnimation>
             ))}
           </div>
-
-          {/* Load More Button - only for "All" group */}
-          {selectedCategory === 'All' && displayedIntegrations.length < filteredIntegrations.length && (
-            <div className="mt-14 flex justify-center">
-              <button
-                onClick={handleLoadMore}
-                className="cursor-pointer rounded-[12px] bg-[#0a0a0a] px-8 py-3.5 text-[15px] font-medium text-white shadow-sm transition-colors hover:bg-neutral-800"
-              >
-                Load More
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
@@ -255,3 +221,5 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
     </div>
   );
 };
+
+export const IntegrationsListingPage2 = ServicesListingPage;
