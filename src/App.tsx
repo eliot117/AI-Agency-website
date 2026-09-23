@@ -19,7 +19,7 @@ import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { ContactPage } from './components/ContactPage';
 import { BillingProvider } from './context/BillingContext';
 
-type PageState = 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact';
+type PageState = 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'contact';
 
 export function App() {
   const parseRoute = (): { page: PageState; slug?: string } => {
@@ -42,26 +42,20 @@ export function App() {
         return { page: 'contact' };
       }
 
-      // Check Services detail page: /services/:slug (and backwards-compatible /integrations-2/:slug)
+      // Check Services detail page: /services/:slug
       const serviceDetailMatch =
         path.match(/\/services\/([a-zA-Z0-9_-]+)/) ||
-        hash.match(/\/services\/([a-zA-Z0-9_-]+)/) ||
-        path.match(/\/integrations-2\/([a-zA-Z0-9_-]+)/) ||
-        hash.match(/\/integrations-2\/([a-zA-Z0-9_-]+)/);
+        hash.match(/\/services\/([a-zA-Z0-9_-]+)/);
       if (serviceDetailMatch && serviceDetailMatch[1]) {
         return { page: 'service-detail', slug: serviceDetailMatch[1] };
       }
 
-      // Check Services listing page: /services (and backwards-compatible /integrations-2)
+      // Check Services listing page: /services
       if (
         path.includes('/services') ||
         hash.includes('/services') ||
         hash === '#services' ||
-        search.includes('services') ||
-        path.includes('/integrations-2') ||
-        hash.includes('/integrations-2') ||
-        hash === '#integrations-2' ||
-        search.includes('integrations-2')
+        search.includes('services')
       ) {
         return { page: 'services' };
       }
@@ -139,7 +133,7 @@ export function App() {
       targetUrl = hashOrSlug && hashOrSlug.startsWith('#') ? `/pricing${hashOrSlug}` : '/pricing';
     } else if (page === 'integrations') {
       targetUrl = '/integrations';
-    } else if (page === 'services' || page === 'integrations-2') {
+    } else if (page === 'services') {
       targetUrl = '/services';
     } else if (page === 'contact') {
       targetUrl = hashOrSlug && hashOrSlug.startsWith('#') ? `/contact${hashOrSlug}` : '/contact';
@@ -147,7 +141,7 @@ export function App() {
       const slug = hashOrSlug || selectedIntegrationSlug || 'paypal';
       setSelectedIntegrationSlug(slug);
       targetUrl = `/integrations/${slug}`;
-    } else if (page === 'service-detail' || page === 'integration-detail-2') {
+    } else if (page === 'service-detail') {
       const slug = hashOrSlug || selectedIntegrationSlug || 'paypal';
       setSelectedIntegrationSlug(slug);
       targetUrl = `/services/${slug}`;
@@ -235,7 +229,7 @@ export function App() {
               onOpenContact={() => navigateTo('contact')}
               onBookDemo={() => navigateTo('contact', '#book-a-demo')}
             />
-          ) : currentPage === 'services' || currentPage === 'integrations-2' ? (
+          ) : currentPage === 'services' ? (
             /* Dedicated Services Listing Page */
             <ServicesListingPage
               onSelectIntegration={(slug) => navigateTo('service-detail', slug)}
@@ -243,7 +237,7 @@ export function App() {
               onOpenContact={() => navigateTo('contact')}
               onBookDemo={() => navigateTo('contact', '#book-a-demo')}
             />
-          ) : currentPage === 'service-detail' || currentPage === 'integration-detail-2' ? (
+          ) : currentPage === 'service-detail' ? (
             /* Dynamic Individual Service Detail Page */
             <ServiceDetailPage
               slug={selectedIntegrationSlug}

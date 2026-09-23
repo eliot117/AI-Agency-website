@@ -9,8 +9,6 @@ export interface ServicesSectionProps {
   onBookDemo?: () => void;
 }
 
-export type Integrations2Props = ServicesSectionProps;
-
 export const ServicesSection: React.FC<ServicesSectionProps> = ({
   onNavigateIntegrations,
 }) => {
@@ -111,6 +109,4 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
     </section>
   );
 };
-
-export const Integrations2 = ServicesSection;
 

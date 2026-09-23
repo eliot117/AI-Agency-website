@@ -20,8 +20,6 @@ export interface ServiceDetailPageProps {
   onNavigatePricingSection?: (hash: string) => void;
 }
 
-export type IntegrationDetailPage2Props = ServiceDetailPageProps;
-
 const HERO_TAG_VARIANTS = {
   hidden: { filter: 'blur(8px)', opacity: 0, y: 15 },
   visible: {
@@ -195,7 +193,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                   onClick={handleCtaClick}
                   className="inline-flex cursor-pointer items-center justify-center rounded-[12px] bg-[#0056ff] px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#0047d4] text-center w-full shadow-xs"
                 >
-                  View Pricing
+                  {item.buttonLabel || 'View Pricing'}
                 </a>
                 <a
                   href="/contact#book-a-demo"
@@ -247,19 +245,25 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
           </ScrollAnimation>
 
           {/* What's Included / What Happens on the Call Section */}
-          {item.includedItems.length > 0 && (
+          {(item.includedText || (item.includedItems && item.includedItems.length > 0)) && (
             <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
               <div className="mb-14">
-                <h2 className="mb-6 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
                   {item.includedHeading}
                 </h2>
-                <ul className="space-y-3.5 pl-5 list-disc text-[16px] leading-relaxed text-[#525252]">
-                  {item.includedItems.map((inc, idx) => (
-                    <li key={idx} className="pl-1 text-[#525252]">
-                      {inc}
-                    </li>
-                  ))}
-                </ul>
+                {item.includedText ? (
+                  <p className="text-[16px] leading-[1.7] text-[#525252]">
+                    {item.includedText}
+                  </p>
+                ) : (
+                  <ul className="space-y-3.5 pl-5 list-disc text-[16px] leading-relaxed text-[#525252]">
+                    {item.includedItems?.map((inc, idx) => (
+                      <li key={idx} className="pl-1 text-[#525252]">
+                        {inc}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </ScrollAnimation>
           )}
@@ -268,7 +272,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
           {item.howHeading && item.howText && (
             <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
               <div className="mb-14">
-                <h2 className="mb-6 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
                   {item.howHeading}
                 </h2>
                 <p className="text-[16px] leading-[1.7] text-[#525252]">
@@ -281,7 +285,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
           {/* Why It's Worth It Section */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
             <div className="mb-14">
-              <h2 className="mb-6 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+              <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
                 {item.whyHeading}
               </h2>
               <p className="text-[16px] leading-[1.7] text-[#525252]">
@@ -353,6 +357,4 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
     </div>
   );
 };
-
-export const IntegrationDetailPage2 = ServiceDetailPage;
 

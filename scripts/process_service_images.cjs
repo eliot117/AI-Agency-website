@@ -3,13 +3,13 @@ const fs = require('fs');
 const path = require('path');
 
 const iconData = [
-  { name: 'Receptionist.jpg', cx: 512.5, cy: 512, opticalSize: 712, borderRGB: { r: 216, g: 233, b: 240 } },
+  { name: 'Receptionist.jpg', cx: 511.5, cy: 472.5, opticalSize: 650, borderRGB: { r: 215, g: 233, b: 240 } },
   { name: 'Customer Support Call.jpg', cx: 512.5, cy: 478.5, opticalSize: 657, borderRGB: { r: 215, g: 232, b: 239 } },
   { name: 'Customer Support Widget.jpg', cx: 512, cy: 512, opticalSize: 493, borderRGB: { r: 214, g: 231, b: 238 } },
   { name: 'Spam.jpg', cx: 512.5, cy: 512.5, opticalSize: 647, borderRGB: { r: 212, g: 229, b: 236 } },
   { name: 'Lead.jpg', cx: 512, cy: 509.5, opticalSize: 574, borderRGB: { r: 213, g: 230, b: 237 } },
-  { name: 'Review.jpg', cx: 729, cy: 392.5, opticalSize: 439, borderRGB: { r: 214, g: 232, b: 239 } },
-  { name: 'Consulting.jpg', cx: 704, cy: 384, opticalSize: 484, borderRGB: { r: 216, g: 234, b: 245 } },
+  { name: 'Review.jpg', cx: 513, cy: 518, opticalSize: 720, borderRGB: { r: 210, g: 228, b: 235 } },
+  { name: 'Consulting.jpg', cx: 703.5, cy: 383, opticalSize: 490, borderRGB: { r: 209, g: 229, b: 240 } },
   { name: 'Full time.jpg', cx: 704, cy: 383.5, opticalSize: 593, borderRGB: { r: 216, g: 234, b: 241 } }
 ];
 

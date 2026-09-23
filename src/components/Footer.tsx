@@ -6,11 +6,11 @@ import { openRetellChat } from '@/lib/retell';
 
 interface FooterProps {
   onOpenContact: () => void;
-  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact', hashOrSlug?: string) => void;
+  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'contact', hashOrSlug?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => {
-  const handleLinkClick = (page: 'home' | 'pricing' | 'integrations' | 'services' | 'integrations-2' | 'contact', hash?: string) => (e: React.MouseEvent) => {
+  const handleLinkClick = (page: 'home' | 'pricing' | 'integrations' | 'services' | 'contact', hash?: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
       onNavigate(page, hash);

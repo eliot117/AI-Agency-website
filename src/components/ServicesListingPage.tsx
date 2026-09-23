@@ -18,8 +18,6 @@ export interface ServicesListingPageProps {
   onBookDemo?: () => void;
 }
 
-export type IntegrationsListingPage2Props = ServicesListingPageProps;
-
 const HERO_TAG_VARIANTS = {
   hidden: { filter: 'blur(8px)', opacity: 0, y: 15 },
   visible: {
@@ -221,5 +219,3 @@ export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
     </div>
   );
 };
-
-export const IntegrationsListingPage2 = ServicesListingPage;

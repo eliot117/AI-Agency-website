@@ -15,7 +15,7 @@ interface PricingPageProps {
   onOpenContact: () => void;
   onSelectPlan: (planName: string) => void;
   onBookDemo?: () => void;
-  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'integrations-2' | 'integration-detail-2' | 'contact', hashOrSlug?: string) => void;
+  onNavigate?: (page: 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'contact', hashOrSlug?: string) => void;
 }
 
 const HERO_TAG_VARIANTS = {
