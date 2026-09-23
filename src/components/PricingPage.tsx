@@ -302,7 +302,7 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1 mb-8">
           <button
             onClick={() => {
-              const el = document.getElementById('compare-plans-2');
+              const el = document.getElementById('autonomous-inbound-ai-agents') || document.getElementById('compare-plans-2');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
             className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
@@ -376,10 +376,10 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
                     <div className="flex flex-col gap-2.5">
                       <button
                         onClick={() => {
-                          let targetId = 'compare-plans';
-                          if (plan.id === 'inbound-agents') targetId = 'compare-plans-2';
-                          else if (plan.id === 'outbound-agents') targetId = 'compare-plans-3';
-                          else if (plan.id === 'enterprise') targetId = 'compare-plans-4';
+                          let targetId = 'ai-consulting';
+                          if (plan.id === 'inbound-agents') targetId = 'autonomous-inbound-ai-agents';
+                          else if (plan.id === 'outbound-agents') targetId = 'autonomous-outbound-ai-agents';
+                          else if (plan.id === 'enterprise') targetId = 'full-time';
 
                           const el = document.getElementById(targetId);
                           if (el) {
@@ -477,7 +477,7 @@ const InboundTableSection: React.FC<{
       ],
     },
     {
-      agent: 'Customer Support AI Call Agent',
+      agent: 'Customer Support(Call)',
       rows: [
         {
           tier: 'Standard',
@@ -494,7 +494,7 @@ const InboundTableSection: React.FC<{
       ],
     },
     {
-      agent: 'Customer Support AI Agent Widget',
+      agent: 'Customer Support(Widget)',
       rows: [
         {
           tier: 'Standard',
@@ -527,8 +527,8 @@ const InboundTableSection: React.FC<{
 
   return (
     <section
-      id="compare-plans-2"
-      className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+      id="autonomous-inbound-ai-agents"
+      className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
     >
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
@@ -575,23 +575,29 @@ const InboundTableSection: React.FC<{
                       </h4>
                     </div>
 
-                    {group.rows.map((row, rIdx) => (
-                      <div
-                        key={rIdx}
-                        className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''}`}
-                      >
-                        <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
-                          <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
-                            {row.tier}
-                          </span>
-                        </div>
-                        {row.values.map((val, valIdx) => (
-                          <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
-                            {renderTableValue(val)}
+                    {group.rows.map((row, rIdx) => {
+                      const isReceptionistExpert = gIdx === 0 && row.tier === 'Expert';
+                      const rowId = isReceptionistExpert ? 'receptionist-expert-pricing' : undefined;
+
+                      return (
+                        <div
+                          key={rIdx}
+                          id={rowId}
+                          className={`grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] items-center py-3.5 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/80 w-full ${rIdx === 0 ? 'mb-1' : ''} ${isReceptionistExpert ? 'scroll-mt-20 sm:scroll-mt-24' : ''}`}
+                        >
+                          <div className="pl-2 sm:pl-4 pr-3 sm:pr-4">
+                            <span className="text-[13px] sm:text-[14px] font-bold text-[#0a0a0a] block">
+                              {row.tier}
+                            </span>
                           </div>
-                        ))}
-                      </div>
-                    ))}
+                          {row.values.map((val, valIdx) => (
+                            <div key={valIdx} className={valIdx === 10 ? 'text-center pl-0 pr-1 flex justify-center items-center' : 'text-center px-1 flex justify-center items-center'}>
+                              {renderTableValue(val)}
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}
@@ -662,8 +668,8 @@ const OutboundTableSection: React.FC<{
 
   return (
     <section
-      id="compare-plans-3"
-      className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+      id="autonomous-outbound-ai-agents"
+      className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
     >
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
@@ -1012,8 +1018,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           return (
             <section
               key={sectionIndex}
-              id="compare-plans"
-              className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+              id="ai-consulting"
+              className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
             >
               <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -1092,8 +1098,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           return (
             <section
               key={sectionIndex}
-              id={`compare-plans-${sectionIndex}`}
-              className="py-16 md:py-24 bg-white scroll-mt-24 border-t border-[#f2f2f2]"
+              id="full-time"
+              className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
             >
               <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

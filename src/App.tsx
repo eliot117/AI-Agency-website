@@ -94,7 +94,7 @@ export function App() {
   const initialRoute = parseRoute();
   const [currentPage, setCurrentPage] = useState<PageState>(initialRoute.page);
   const [selectedIntegrationSlug, setSelectedIntegrationSlug] = useState<string>(
-    initialRoute.slug || 'paypal'
+    initialRoute.slug || 'receptionist-ai-agent'
   );
 
   useEffect(() => {
@@ -154,19 +154,31 @@ export function App() {
     if (hashOrSlug && hashOrSlug.startsWith('#')) {
       setTimeout(() => {
         let target = hashOrSlug;
-        if (
-          hashOrSlug === '#ai-consulting' ||
-          hashOrSlug === '#book-a-demo' ||
-          hashOrSlug === '#book-demo' ||
-          hashOrSlug === '#free-ai-consulting'
-        ) {
-          target = '#book-a-demo';
-        } else if (
-          hashOrSlug === '#send-us-a-message' ||
-          hashOrSlug === '#send-message' ||
-          hashOrSlug === '#contact-form'
-        ) {
-          target = '#contact-form';
+        if (page === 'contact') {
+          if (
+            hashOrSlug === '#ai-consulting' ||
+            hashOrSlug === '#book-a-demo' ||
+            hashOrSlug === '#book-demo' ||
+            hashOrSlug === '#free-ai-consulting'
+          ) {
+            target = '#book-a-demo';
+          } else if (
+            hashOrSlug === '#send-us-a-message' ||
+            hashOrSlug === '#send-message' ||
+            hashOrSlug === '#contact-form'
+          ) {
+            target = '#contact-form';
+          }
+        } else if (page === 'pricing') {
+          if (hashOrSlug === '#compare-plans') {
+            target = '#ai-consulting';
+          } else if (hashOrSlug === '#compare-plans-2') {
+            target = '#autonomous-inbound-ai-agents';
+          } else if (hashOrSlug === '#compare-plans-3') {
+            target = '#autonomous-outbound-ai-agents';
+          } else if (hashOrSlug === '#compare-plans-4') {
+            target = '#full-time';
+          }
         }
         const el = document.querySelector(target);
         if (el) {

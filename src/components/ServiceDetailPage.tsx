@@ -186,14 +186,14 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                 </div>
               </div>
 
-              {/* Action Buttons: View Pricing & Book a Demo */}
+              {/* Action Buttons: See Pricing & Book a Demo */}
               <div className="shrink-0 pt-1 flex flex-col gap-2.5 w-full sm:w-[200px]">
                 <a
                   href={item.buttonLink || '/pricing'}
                   onClick={handleCtaClick}
                   className="inline-flex cursor-pointer items-center justify-center rounded-[12px] bg-[#0056ff] px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#0047d4] text-center w-full shadow-xs"
                 >
-                  {item.buttonLabel || 'View Pricing'}
+                  {item.buttonLabel || 'See Pricing'}
                 </a>
                 <a
                   href="/contact#book-a-demo"

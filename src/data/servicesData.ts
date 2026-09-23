@@ -1,5 +1,6 @@
 export interface AgentOrPlanItem {
   slug: string;
+  legacySlugs?: string[];
   name: string;
   category: 'Inbound AI Agents' | 'Outbound AI Agents' | 'Plans';
   shortDescription: string;
@@ -24,7 +25,8 @@ export interface AgentOrPlanItem {
 
 export const SERVICES_DATA: AgentOrPlanItem[] = [
   {
-    slug: 'paypal',
+    slug: 'receptionist-ai-agent',
+    legacySlugs: ['paypal', 'receptionist'],
     name: 'Receptionist AI Agent',
     category: 'Inbound AI Agents',
     shortDescription: 'Answers every call and books appointments, 24/7, like your best hire.',
@@ -39,14 +41,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: "A call comes in and the AI answers immediately, in your business's voice, and handles the booking from start to finish. If it's something only you can decide, it gets logged and you're notified straight away. If it's routine, which most calls are, it's done before you'd have even finished dialing back.",
     whyHeading: "Why It's Worth It",
     whyText: "The real cost of a missed call isn't the call itself, it's the booking that goes to whoever picked up next. A receptionist that never misses a single call pays for itself the first week it stops even one booking from walking to a competitor, and it keeps paying for itself every week after that.",
-    buttonLabel: 'See Receptionist Pricing',
-    buttonLink: '/pricing#receptionist-pricing',
-    pricingTargetHash: '#receptionist-pricing',
-    popularTools: ['razorpay', 'wise', 'stripe'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#autonomous-inbound-ai-agents',
+    pricingTargetHash: '#autonomous-inbound-ai-agents',
+    popularTools: ['customer-support-ai-call-agent', 'customer-support-ai-agent-widget', 'spam-filter-ai-agent'],
     logoUrl: '/Receptionist.jpg',
   },
   {
-    slug: 'razorpay',
+    slug: 'customer-support-ai-call-agent',
+    legacySlugs: ['razorpay', 'customer-support-call', 'customer-support-call-agent'],
     name: 'Customer Support AI Call Agent',
     category: 'Inbound AI Agents',
     shortDescription: "Handles existing customer calls and escalates only when a human's actually needed.",
@@ -61,14 +64,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: 'The AI greets the caller and works out what they actually need. If it can answer directly, it does, calmly and accurately. The moment the call needs a human, it says so, transfers warmly, and briefs your team member before they even say hello.',
     whyHeading: "Why It's Worth It",
     whyText: 'Every repetitive support call your team answers is time not spent on the calls that actually need them. This agent takes the routine ones off the board completely, and hands you only the calls that were always going to need a real person anyway, already briefed and ready to go.',
-    buttonLabel: 'View Support Agent Pricing',
-    buttonLink: '/pricing#customer-support-voice-pricing',
-    pricingTargetHash: '#customer-support-voice-pricing',
-    popularTools: ['paypal', 'wise', 'stripe'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#autonomous-inbound-ai-agents',
+    pricingTargetHash: '#autonomous-inbound-ai-agents',
+    popularTools: ['receptionist-ai-agent', 'customer-support-ai-agent-widget', 'spam-filter-ai-agent'],
     logoUrl: '/Customer Support Call.jpg',
   },
   {
-    slug: 'wise',
+    slug: 'customer-support-ai-agent-widget',
+    legacySlugs: ['wise', 'customer-support-widget', 'customer-support-widget-agent'],
     name: 'Customer Support AI Agent Widget',
     category: 'Inbound AI Agents',
     shortDescription: 'Answers website visitors instantly and points them straight to booking or buying.',
@@ -83,14 +87,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: "A visitor lands on your site and asks a question in the widget. The AI answers from your actual product, service, and policy information, in your brand's voice, and gives them a direct link to take the next step rather than leaving them to find it on their own.",
     whyHeading: "Why It's Worth It",
     whyText: 'A visitor who has to wait for an answer is a visitor who often doesn\'t come back. This widget answers before they\'ve had the chance to lose interest, at the exact moment they were ready to act, which is precisely when most sites go quiet.',
-    buttonLabel: 'View Widget Pricing',
-    buttonLink: '/pricing#customer-support-chat-pricing',
-    pricingTargetHash: '#customer-support-chat-pricing',
-    popularTools: ['paypal', 'razorpay', 'stripe'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#receptionist-expert-pricing',
+    pricingTargetHash: '#receptionist-expert-pricing',
+    popularTools: ['receptionist-ai-agent', 'customer-support-ai-call-agent', 'spam-filter-ai-agent'],
     logoUrl: '/Customer Support Widget.jpg',
   },
   {
-    slug: 'stripe',
+    slug: 'spam-filter-ai-agent',
+    legacySlugs: ['stripe', 'spam-filter'],
     name: 'Spam Filter AI Agent',
     category: 'Inbound AI Agents',
     shortDescription: 'Screens every call and puts only real customers through to you.',
@@ -105,14 +110,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: 'A call comes in and the AI asks a few quick questions, name, company, reason for calling. Genuine spam gives itself away fast, vague answers, no real reason for the call, an obvious script. Real customers have their details taken and are passed straight to you with a callback number ready to go, while spam is logged and goes no further.',
     whyHeading: "Why It's Worth It",
     whyText: "The cost of spam calls isn't just the call itself, it's the interruption, and the real risk that a genuine customer gets lost in the noise. This agent's only job is making sure that never happens again, for a fraction of what hiring a receptionist to screen calls would cost.",
-    buttonLabel: 'See Spam Filter Pricing',
-    buttonLink: '/pricing#spam-filter-pricing',
-    pricingTargetHash: '#spam-filter-pricing',
-    popularTools: ['paypal', 'pipedrive', 'zoho-crm'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#receptionist-expert-pricing',
+    pricingTargetHash: '#receptionist-expert-pricing',
+    popularTools: ['receptionist-ai-agent', 'lead-call-ai-agent', 'reviews-ai-agent'],
     logoUrl: '/Spam.jpg',
   },
   {
-    slug: 'pipedrive',
+    slug: 'lead-call-ai-agent',
+    legacySlugs: ['pipedrive', 'lead-call'],
     name: 'Lead Call AI Agent',
     category: 'Outbound AI Agents',
     shortDescription: 'Calls new leads within minutes and gets them booked before they go cold.',
@@ -127,14 +133,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: "A new lead submits a form. Within minutes, the AI is calling them, qualifying interest, and working through the usual hesitations in real time. Once they're ready, the call is handed to a booking agent invisibly, so from the lead's side, it's one continuous conversation that ends with a booked appointment.",
     whyHeading: "Why It's Worth It",
     whyText: "Leads don't wait. The business that responds first usually wins the job, and most leads sit for hours before anyone calls them back. This agent calls in minutes, every time, so speed stops being the reason a lead went to someone else.",
-    buttonLabel: 'View Lead Call Pricing',
-    buttonLink: '/pricing#lead-call-pricing',
-    pricingTargetHash: '#lead-call-pricing',
-    popularTools: ['zoho-crm', 'salesforce', 'hubspot'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#autonomous-outbound-ai-agents',
+    pricingTargetHash: '#autonomous-outbound-ai-agents',
+    popularTools: ['reviews-ai-agent', 'consulting-plan', 'full-time-plan'],
     logoUrl: '/Lead.jpg',
   },
   {
-    slug: 'zoho-crm',
+    slug: 'reviews-ai-agent',
+    legacySlugs: ['zoho-crm', 'reviews'],
     name: 'Reviews AI Agent',
     category: 'Outbound AI Agents',
     shortDescription: 'Calls every customer after the job and asks happy ones for a Google review.',
@@ -149,14 +156,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     howText: "Once a job's marked complete, the AI calls the customer and asks how everything went. A happy customer is asked for a review immediately and sent a direct link while it's still front of mind, while anyone less than happy is asked what went wrong, and that goes straight to you instead of to Google.",
     whyHeading: "Why It's Worth It",
     whyText: "Most happy customers never leave a review, not because they don't want to, but because nobody asked at the right moment. This agent asks every single time, while it still matters, and protects your rating from the reviews you'd rather have caught early and handled privately.",
-    buttonLabel: 'See Reviews Agent Pricing',
-    buttonLink: '/pricing#reviews-pricing',
-    pricingTargetHash: '#reviews-pricing',
-    popularTools: ['pipedrive', 'salesforce', 'hubspot'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#autonomous-outbound-ai-agents',
+    pricingTargetHash: '#autonomous-outbound-ai-agents',
+    popularTools: ['lead-call-ai-agent', 'consulting-plan', 'full-time-plan'],
     logoUrl: '/Review.jpg',
   },
   {
-    slug: 'salesforce',
+    slug: 'consulting-plan',
+    legacySlugs: ['salesforce', 'consulting'],
     name: 'Consulting Plan',
     category: 'Plans',
     shortDescription: 'A free, no obligation call to find out exactly where AI fits your business.',
@@ -169,14 +177,15 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     includedText: "The call opens with a genuine discussion about your business and what's actually eating your time right now, not a rehearsed pitch. Your assessment results get reviewed together rather than just emailed over and left for you to interpret alone, and you're shown a live demo of whichever agent or agents make sense for a business like yours. Whatever questions you have about how the services actually work get answered directly, and the call closes with personalised recommendations built around your situation, along with practical tips from other businesses in your industry who've already worked through the same decisions.",
     whyHeading: "Why It's Worth It",
     whyText: "There's no cost and no pressure to buy anything on this call. The only real risk is skipping it and guessing instead, or ending up with the wrong agent because nobody walked you through what each one actually does for a business like yours.",
-    buttonLabel: "See What's Included",
-    buttonLink: '/pricing#compare-plans',
-    pricingTargetHash: '#compare-plans',
-    popularTools: ['hubspot', 'pipedrive', 'paypal'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#ai-consulting',
+    pricingTargetHash: '#ai-consulting',
+    popularTools: ['full-time-plan', 'lead-call-ai-agent', 'receptionist-ai-agent'],
     logoUrl: '/Consulting.jpg',
   },
   {
-    slug: 'hubspot',
+    slug: 'full-time-plan',
+    legacySlugs: ['hubspot', 'full-time'],
     name: 'Full-Time Plan',
     category: 'Plans',
     shortDescription: 'Every agent, plus a dedicated AI architect running the whole system for you.',
@@ -189,10 +198,10 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     includedText: 'Every Autonomous Inbound and Outbound agent is included from the start, alongside a full time AI architect whose job is your business specifically, not a shared pool of clients. Specialised AI agents get built for your team, and custom tools are built around how your workers actually work day to day, not a generic workflow. On top of that, you get a greater volume of personalised, autonomous automations than any individual plan offers, plus advanced, fully personalised AI infrastructure and a custom website built specifically for how your business runs.',
     whyHeading: "Why It's Worth It",
     whyText: 'Running six separate agents is still six separate things to manage on your own. This plan puts one person on your business full time, building and adjusting the whole system as it grows, instead of leaving you to manage each agent individually as your needs change.',
-    buttonLabel: 'See Full-Time Plan',
-    buttonLink: '/pricing#compare-plans-4',
-    pricingTargetHash: '#compare-plans-4',
-    popularTools: ['salesforce', 'pipedrive', 'paypal'],
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#full-time',
+    pricingTargetHash: '#full-time',
+    popularTools: ['consulting-plan', 'lead-call-ai-agent', 'receptionist-ai-agent'],
     logoUrl: '/Full time.jpg',
   },
 ];
@@ -207,7 +216,13 @@ export const SERVICE_CATEGORIES = [
 export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number];
 
 export function getServiceBySlug(slug: string): AgentOrPlanItem | undefined {
-  return SERVICES_DATA.find((item) => item.slug === slug);
+  if (!slug) return undefined;
+  const normalized = slug.toLowerCase();
+  return SERVICES_DATA.find(
+    (item) =>
+      item.slug.toLowerCase() === normalized ||
+      item.legacySlugs?.some((s) => s.toLowerCase() === normalized)
+  );
 }
 
 

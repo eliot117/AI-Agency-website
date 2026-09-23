@@ -4,6 +4,7 @@ import {
   SERVICE_CATEGORIES,
   AgentOrPlanItem,
   ServiceCategory,
+  getServiceBySlug,
 } from '../data/servicesData';
 import { IntegrationCard } from './IntegrationCard';
 import { FAQ } from './FAQ';
@@ -47,8 +48,15 @@ export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
   };
 
   // Preview logo tools for the hero strip in order: Widget, Review, Receptionist, customer service Call, lead, Spam
-  const heroLogos = ['wise', 'zoho-crm', 'paypal', 'razorpay', 'pipedrive', 'stripe']
-    .map((slug) => SERVICES_DATA.find((item) => item.slug === slug))
+  const heroLogos = [
+    'customer-support-ai-agent-widget',
+    'reviews-ai-agent',
+    'receptionist-ai-agent',
+    'customer-support-ai-call-agent',
+    'lead-call-ai-agent',
+    'spam-filter-ai-agent',
+  ]
+    .map((slug) => getServiceBySlug(slug))
     .filter((item): item is AgentOrPlanItem => Boolean(item));
 
   return (

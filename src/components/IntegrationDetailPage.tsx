@@ -224,9 +224,10 @@ export const IntegrationDetailPage: React.FC<IntegrationDetailPageProps> = ({
                     href={item.installUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex cursor-pointer items-center justify-center rounded-[12px] bg-[#0056ff] px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#0047d4]"
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-[12px] bg-[#0056ff] px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#0047d4]"
                   >
-                    View App
+                    <span>View App</span>
+                    <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
               )}
