@@ -178,6 +178,11 @@ export function App() {
             target = '#autonomous-outbound-ai-agents';
           } else if (hashOrSlug === '#compare-plans-4') {
             target = '#full-time';
+          } else if (
+            hashOrSlug === '#receptionist-expert-pricing' ||
+            hashOrSlug === '#autonomous-inbound-ai-agents-2'
+          ) {
+            target = '#autonomous-inbound-ai-agents-2';
           }
         }
         const el = document.querySelector(target);

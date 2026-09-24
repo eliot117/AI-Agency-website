@@ -577,7 +577,7 @@ const InboundTableSection: React.FC<{
 
                     {group.rows.map((row, rIdx) => {
                       const isReceptionistExpert = gIdx === 0 && row.tier === 'Expert';
-                      const rowId = isReceptionistExpert ? 'receptionist-expert-pricing' : undefined;
+                      const rowId = isReceptionistExpert ? 'autonomous-inbound-ai-agents-2' : undefined;
 
                       return (
                         <div
