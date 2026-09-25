@@ -982,27 +982,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         onSelectPlan={onSelectPlan}
       />
 
-      {/* 2.5 SERVICES (AI AGENTS & PLANS) GRID SECTION */}
-      <ServicesSection
-        onNavigateIntegrations={() => {
-          if (onNavigate) {
-            onNavigate('services');
-          }
-        }}
-        onSelectIntegration={(slug) => {
-          if (onNavigate) {
-            onNavigate('service-detail', slug);
-          }
-        }}
-        onBookDemo={() => {
-          if (onNavigate) {
-            onNavigate('contact', '#book-a-demo');
-          } else if (onBookDemo) {
-            onBookDemo();
-          }
-        }}
-      />
-
       {/* 3. FEATURE COMPARISON TABLES (4 Sections) */}
       {[1, 2, 3, 4].map((sectionIndex) => {
         if (sectionIndex === 1) {
@@ -1254,6 +1233,27 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           </section>
         );
       })}
+
+      {/* SERVICES (AI AGENTS & PLANS) GRID SECTION */}
+      <ServicesSection
+        onNavigateIntegrations={() => {
+          if (onNavigate) {
+            onNavigate('services');
+          }
+        }}
+        onSelectIntegration={(slug) => {
+          if (onNavigate) {
+            onNavigate('service-detail', slug);
+          }
+        }}
+        onBookDemo={() => {
+          if (onNavigate) {
+            onNavigate('contact', '#book-a-demo');
+          } else if (onBookDemo) {
+            onBookDemo();
+          }
+        }}
+      />
 
       {/* 4. FREQUENTLY ASKED QUESTIONS */}
       <FAQ onOpenContact={onOpenContact} />

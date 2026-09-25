@@ -10,10 +10,39 @@ interface IntegrationsProps {
 export const Integrations: React.FC<IntegrationsProps> = ({ onNavigateIntegrations }) => {
   return (
     <section className="py-20 md:py-28 bg-white overflow-hidden">
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Text Column */}
-          <div className="lg:col-span-5">
+          {/* Left Floating Apps Cloud (Image) */}
+          <div className="lg:col-span-7 relative flex items-center justify-center lg:justify-start">
+            <ScrollAnimation direction="left" viewport={{ amount: 0.3, margin: '0px 0px -40px 0px', once: true }} className="w-full flex justify-center lg:justify-start">
+              <div className="relative w-full max-w-[760px] flex items-center justify-center lg:justify-start p-2">
+                <a
+                  href="/integrations"
+                  onClick={(e) => {
+                    if (onNavigateIntegrations) {
+                      e.preventDefault();
+                      onNavigateIntegrations();
+                    }
+                  }}
+                  className="block w-full cursor-pointer focus:outline-none"
+                  aria-label="View all integrations"
+                >
+                  <img
+                    src="https://static.digitecgalaxus.ch/im/Files/7/7/1/4/8/1/7/6/New_Microsoft_Office_Icons_2025_0221.png?impolicy=teaser&resizeWidth=1136&resizeHeight=568"
+                    onError={(e) => {
+                      e.currentTarget.src = '/office-icons.png';
+                    }}
+                    alt="Microsoft Office Icons"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-auto max-h-[620px] object-contain rounded-[20px] transition-transform duration-500 hover:scale-[1.05] transform scale-[1.06] cursor-pointer"
+                  />
+                </a>
+              </div>
+            </ScrollAnimation>
+          </div>
+
+          {/* Right Text Column */}
+          <div className="lg:col-span-5 lg:pl-6 xl:pl-8">
             <TextAnimation
               variants={{
                 hidden: { filter: 'blur(8px)', opacity: 0, y: 15 },
@@ -76,35 +105,6 @@ export const Integrations: React.FC<IntegrationsProps> = ({ onNavigateIntegratio
               <span>View all integrations</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-          </div>
-
-          {/* Right Floating Apps Cloud */}
-          <div className="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
-            <ScrollAnimation direction="right" viewport={{ amount: 0.3, margin: '0px 0px -40px 0px', once: true }} className="w-full flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[600px] flex items-center justify-center lg:justify-end p-2">
-                <a
-                  href="/integrations"
-                  onClick={(e) => {
-                    if (onNavigateIntegrations) {
-                      e.preventDefault();
-                      onNavigateIntegrations();
-                    }
-                  }}
-                  className="block w-full cursor-pointer focus:outline-none"
-                  aria-label="View all integrations"
-                >
-                  <img
-                    src="https://static.digitecgalaxus.ch/im/Files/7/7/1/4/8/1/7/6/New_Microsoft_Office_Icons_2025_0221.png?impolicy=teaser&resizeWidth=1136&resizeHeight=568"
-                    onError={(e) => {
-                      e.currentTarget.src = '/office-icons.png';
-                    }}
-                    alt="Microsoft Office Icons"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-auto max-h-[520px] object-contain rounded-[20px] transition-transform duration-500 hover:scale-[1.03] transform scale-[1.05] translate-x-5 sm:translate-x-8 lg:translate-x-10 translate-y-2 sm:translate-y-3 cursor-pointer"
-                  />
-                </a>
-              </div>
-            </ScrollAnimation>
           </div>
         </div>
       </div>
