@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ExternalLink } from 'lucide-react';
 import {
   getServiceBySlug,
   SERVICES_DATA,
@@ -31,10 +31,12 @@ const HERO_TAG_VARIANTS = {
 };
 
 interface TierComparisonConfig {
+  heading?: string;
   subtitle?: string;
   columns: string[];
   rows: {
     feature: string;
+    link?: string;
     values: (string | boolean)[];
   }[];
 }
@@ -109,6 +111,50 @@ const TIER_COMPARISONS: Record<string, TierComparisonConfig> = {
       { feature: 'Price', values: ['$50 setup + $100/mo', '$100 setup + $250/mo', '$100 setup + $300/mo'] },
     ],
   },
+  'consulting-plan': {
+    columns: ['Included'],
+    rows: [
+      { feature: 'AI Business Discussion', values: [true] },
+      { feature: 'Assessment Results', values: [true] },
+      { feature: 'Personalised Recommendations', values: [true] },
+      { feature: 'Industry Tips', values: [true] },
+      { feature: 'Enquiries About Services', values: [true] },
+      { feature: 'Live Demo', values: [true] },
+    ],
+  },
+  'consulting': {
+    columns: ['Included'],
+    rows: [
+      { feature: 'AI Business Discussion', values: [true] },
+      { feature: 'Assessment Results', values: [true] },
+      { feature: 'Personalised Recommendations', values: [true] },
+      { feature: 'Industry Tips', values: [true] },
+      { feature: 'Enquiries About Services', values: [true] },
+      { feature: 'Live Demo', values: [true] },
+    ],
+  },
+  'full-time-plan': {
+    columns: ['Included'],
+    rows: [
+      { feature: 'Full Time AI Architect', link: 'https://www.coursera.org/articles/ai-architect', values: [true] },
+      { feature: 'Full Time AI Solutions Engineer', link: 'https://www.careerexplorer.com/careers/ai-solutions-engineer/', values: [true] },
+      { feature: 'Full Systems Automated', values: [true] },
+      { feature: 'Specialised AI Agents for Workers', values: [true] },
+      { feature: 'Custom AI Tools & AI Apps for Workers', values: [true] },
+      { feature: 'Custom AI Developments, Infrastructures & Websites', values: [true] },
+    ],
+  },
+  'full-time': {
+    columns: ['Included'],
+    rows: [
+      { feature: 'Full Time AI Architect', link: 'https://www.coursera.org/articles/ai-architect', values: [true] },
+      { feature: 'Full Time AI Solutions Engineer', link: 'https://www.careerexplorer.com/careers/ai-solutions-engineer/', values: [true] },
+      { feature: 'Full Systems Automated', values: [true] },
+      { feature: 'Specialised AI Agents for Workers', values: [true] },
+      { feature: 'Custom AI Tools & AI Apps for Workers', values: [true] },
+      { feature: 'Custom AI Developments, Infrastructures & Websites', values: [true] },
+    ],
+  },
 };
 
 const renderTableValue = (val: string | boolean) => {
@@ -177,7 +223,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
   }
 
   // Category-based related items logic
-  const isPlanPage = item.category === 'Plans';
+  const isPlanPage = item.category === 'AI Consulting' || item.category === 'Full Time' || (item.category as string) === 'Plans';
   const isOutboundPage = item.category === 'Outbound AI Agents';
   const isInboundPage = item.category === 'Inbound AI Agents';
   const tierConfig = TIER_COMPARISONS[item.slug];
@@ -381,23 +427,25 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             </ScrollAnimation>
           )}
 
-          {/* Choosing Your Tier Section for Inbound & Outbound AI Agents */}
+          {/* Tier Comparison or Plan Features Table */}
           {tierConfig && (
             <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
               <div className="mb-14">
-                <h2 className="mb-2 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
-                  Choosing Your Tier
-                </h2>
+                {tierConfig.columns.length > 1 && (
+                  <h2 className="mb-2 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                    {tierConfig.heading || 'Choosing Your Tier'}
+                  </h2>
+                )}
                 {tierConfig.subtitle && (
                   <p className="mb-4 text-[15px] sm:text-[16px] leading-[1.6] text-[#525252]">
                     {tierConfig.subtitle}
                   </p>
                 )}
-                <div className="overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 mt-4">
-                  <div className="min-w-[560px] sm:min-w-0 relative">
+                <div className={`${tierConfig.columns.length > 1 ? 'overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0' : 'w-full'} mt-4`}>
+                  <div className={`${tierConfig.columns.length > 1 ? 'min-w-[560px] sm:min-w-0' : 'w-full'} relative`}>
                     {/* Table Header */}
                     <div className="relative z-10 grid grid-cols-12 items-center pb-5 pt-2 border-b border-[#f2f2f2]">
-                      <div className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4`}>
+                      <div className={`${tierConfig.columns.length === 1 ? 'col-span-8' : tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4`}>
                         <h3 className="font-heading text-[18px] font-medium text-[#0a0a0a]">
                           Features
                         </h3>
@@ -405,7 +453,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                       {tierConfig.columns.map((colName, cIdx) => (
                         <div
                           key={cIdx}
-                          className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center`}
+                          className={`${tierConfig.columns.length === 1 ? 'col-span-4' : tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center`}
                         >
                           <span className="font-heading text-[16px] font-medium text-[#0a0a0a]">
                             {colName}
@@ -420,15 +468,27 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                         key={rIdx}
                         className="grid grid-cols-12 items-center py-3 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/60"
                       >
-                        <div className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4 pr-3`}>
-                          <span className="text-[13.5px] sm:text-[14px] font-semibold text-[#0a0a0a]">
-                            {row.feature}
-                          </span>
+                        <div className={`${tierConfig.columns.length === 1 ? 'col-span-8' : tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4 pr-3`}>
+                          {row.link ? (
+                            <a
+                              href={row.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-[#0056ff] underline underline-offset-2 hover:text-[#0040c0]"
+                            >
+                              <span>{row.feature}</span>
+                              <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                            </a>
+                          ) : (
+                            <span className="text-[13.5px] sm:text-[14px] font-semibold text-[#0a0a0a]">
+                              {row.feature}
+                            </span>
+                          )}
                         </div>
                         {row.values.map((val, vIdx) => (
                           <div
                             key={vIdx}
-                            className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center flex justify-center items-center`}
+                            className={`${tierConfig.columns.length === 1 ? 'col-span-4' : tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center flex justify-center items-center`}
                           >
                             {renderTableValue(val)}
                           </div>

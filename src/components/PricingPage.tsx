@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, ExternalLink } from 'lucide-react';
 import { LOGO_ITEMS } from './Logos';
 import { FAQ } from './FAQ';
 import { FinalCTA } from './FinalCTA';
@@ -1067,11 +1067,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
 
         if (sectionIndex === 4) {
           const fullTimeRows = [
-            'Full Time AI Architect',
-            'Specialised Agents for Your Team',
-            'Custom Tools for Workers',
-            'More Automations',
-            'Custom AI Infrastructure & Websites',
+            { name: 'Full Time AI Architect', link: 'https://www.coursera.org/articles/ai-architect' },
+            { name: 'Full Time AI Solutions Engineer', link: 'https://www.careerexplorer.com/careers/ai-solutions-engineer/' },
+            { name: 'Full Systems Automated' },
+            { name: 'Specialised AI Agents for Workers' },
+            { name: 'Custom AI Tools & AI Apps for Workers' },
+            { name: 'Custom AI Developments, Infrastructures & Websites' },
           ];
 
           return (
@@ -1113,21 +1114,37 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                         </div>
 
                         {/* Table Body Rows */}
-                        {fullTimeRows.map((rowText, rIdx) => (
-                          <div
-                            key={rIdx}
-                            className="grid grid-cols-12 items-center py-3 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/60"
-                          >
-                            <div className="col-span-8 pl-4 pr-3">
-                              <span className="text-[13.5px] sm:text-[14px] font-semibold text-[#0a0a0a]">
-                                {rowText}
-                              </span>
+                        {fullTimeRows.map((rowItem, rIdx) => {
+                          const name = typeof rowItem === 'string' ? rowItem : rowItem.name;
+                          const link = typeof rowItem === 'string' ? undefined : rowItem.link;
+                          return (
+                            <div
+                              key={rIdx}
+                              className="grid grid-cols-12 items-center py-3 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/60"
+                            >
+                              <div className="col-span-8 pl-4 pr-3">
+                                {link ? (
+                                  <a
+                                    href={link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-[#0056ff] underline underline-offset-2 hover:text-[#0040c0]"
+                                  >
+                                    <span>{name}</span>
+                                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                  </a>
+                                ) : (
+                                  <span className="text-[13.5px] sm:text-[14px] font-semibold text-[#0a0a0a]">
+                                    {name}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="col-span-4 text-center">
+                                {renderTableValue(true)}
+                              </div>
                             </div>
-                            <div className="col-span-4 text-center">
-                              {renderTableValue(true)}
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </ScrollAnimation>
                   </div>

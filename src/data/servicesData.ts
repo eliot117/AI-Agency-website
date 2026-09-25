@@ -2,7 +2,7 @@ export interface AgentOrPlanItem {
   slug: string;
   legacySlugs?: string[];
   name: string;
-  category: 'Inbound AI Agents' | 'Outbound AI Agents' | 'Plans';
+  category: 'AI Consulting' | 'Inbound AI Agents' | 'Outbound AI Agents' | 'Full Time';
   shortDescription: string;
   tagline: string;
   whatHeading: string;
@@ -24,6 +24,29 @@ export interface AgentOrPlanItem {
 }
 
 export const SERVICES_DATA: AgentOrPlanItem[] = [
+  {
+    slug: 'consulting-plan',
+    legacySlugs: ['salesforce', 'consulting', 'ai-consulting'],
+    name: 'AI Consulting',
+    category: 'AI Consulting',
+    shortDescription: 'A free, no obligation call to find out exactly where AI fits your business.',
+    tagline: 'Find out exactly where AI fits your business, before you spend a dollar on it.',
+    whatHeading: 'What It Does',
+    whatText: "Gives you a free, no obligation call built around your business specifically, not a generic pitch delivered off a script. It reviews your assessment results, opens up an honest discussion about how your business actually runs, walks you through a live demo of the agents that make sense for you, answers whatever questions you have about the services themselves, and leaves you with real recommendations plus tips from other businesses in your industry.",
+    howHeading: 'How It Works',
+    howText: "The call opens with a genuine discussion about your business and what's actually eating your time right now, not a rehearsed pitch. Your assessment results get reviewed together rather than just emailed over and left for you to interpret alone, and you're shown a live demo of whichever agent or agents make sense for a business like yours. Whatever questions you have about how the services actually work get answered directly, and the call closes with personalised recommendations built around your situation, along with practical tips from other businesses in your industry.",
+    includedHeading: "What's Included",
+    includedText: "A free AI business discussion covering what's actually eating your time right now, your assessment results reviewed together rather than just emailed over, a live demo of the agent or agents that make sense for your business, answers to any questions you have about the services themselves, personalised recommendations built around your situation, and tips from other businesses in your industry who've already worked through the same decisions.",
+    whoHeading: "Who It's For",
+    whoText: "Anyone who isn't sure yet whether AI genuinely fits their business, or which agent would actually make a difference versus which one would just be nice to have. This is the step before you commit to anything, built specifically so you're not guessing.",
+    whyHeading: "Why It's Worth It",
+    whyText: "There's no cost and no pressure to buy anything on this call. The only real risk is skipping it and guessing instead, or ending up with the wrong agent because nobody walked you through what each one actually does for a business like yours.",
+    buttonLabel: 'See Pricing',
+    buttonLink: '/pricing#ai-consulting',
+    pricingTargetHash: '#ai-consulting',
+    popularTools: ['full-time-plan', 'lead-call-ai-agent', 'receptionist-ai-agent'],
+    logoUrl: '/Consulting.jpg',
+  },
   {
     slug: 'receptionist-ai-agent',
     legacySlugs: ['paypal', 'receptionist'],
@@ -163,41 +186,22 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
     logoUrl: '/Review.jpg',
   },
   {
-    slug: 'consulting-plan',
-    legacySlugs: ['salesforce', 'consulting'],
-    name: 'Consulting Plan',
-    category: 'Plans',
-    shortDescription: 'A free, no obligation call to find out exactly where AI fits your business.',
-    tagline: 'Find out exactly where AI fits your business, before you spend a dollar on it.',
-    whatHeading: 'What It Includes',
-    whatText: "A free, no obligation call built around your business specifically, not a generic pitch delivered off a script. It starts with reviewing your assessment results together, moves into an open discussion about how your business actually runs day to day, walks through a live demo of the agents that genuinely make sense for you, and leaves room for any questions you've got about the services themselves. It ends with real, personalised recommendations, plus tips drawn from other businesses in your industry that have already gone through the same thing.",
-    whoHeading: "Who It's For",
-    whoText: "Anyone who isn't sure yet whether AI genuinely fits their business, or which agent would actually make a difference versus which one would just be nice to have. This is the step before you commit to anything, built specifically so you're not guessing.",
-    includedHeading: 'What Happens on the Call',
-    includedText: "The call opens with a genuine discussion about your business and what's actually eating your time right now, not a rehearsed pitch. Your assessment results get reviewed together rather than just emailed over and left for you to interpret alone, and you're shown a live demo of whichever agent or agents make sense for a business like yours. Whatever questions you have about how the services actually work get answered directly, and the call closes with personalised recommendations built around your situation, along with practical tips from other businesses in your industry who've already worked through the same decisions.",
-    whyHeading: "Why It's Worth It",
-    whyText: "There's no cost and no pressure to buy anything on this call. The only real risk is skipping it and guessing instead, or ending up with the wrong agent because nobody walked you through what each one actually does for a business like yours.",
-    buttonLabel: 'See Pricing',
-    buttonLink: '/pricing#ai-consulting',
-    pricingTargetHash: '#ai-consulting',
-    popularTools: ['full-time-plan', 'lead-call-ai-agent', 'receptionist-ai-agent'],
-    logoUrl: '/Consulting.jpg',
-  },
-  {
     slug: 'full-time-plan',
-    legacySlugs: ['hubspot', 'full-time'],
-    name: 'Full-Time Plan',
-    category: 'Plans',
+    legacySlugs: ['hubspot', 'full-time', 'full-time-enterprise'],
+    name: 'Full Time (Enterprise)',
+    category: 'Full Time',
     shortDescription: 'Every agent, plus a dedicated AI architect running the whole system for you.',
     tagline: 'Everything AI Launch offers, built and run for your business specifically, by one person dedicated to it.',
-    whatHeading: 'What It Includes',
-    whatText: 'Every Inbound and Outbound agent, plus a full time AI architect assigned to your business specifically. It includes specialised agents built for your team, custom tools built around the way your workers actually operate, a greater volume of personalised, autonomous automations than any single agent plan could offer, and a fully custom AI infrastructure and website built around your business rather than adapted from a template.',
+    whatHeading: 'What It Does',
+    whatText: "Puts a full time AI architect on your business specifically, running every Autonomous Inbound and Outbound agent, building specialised agents for your team, custom tools around how your workers actually operate, a greater volume of personalised automations than any single agent plan, and a fully custom AI infrastructure and website built around your business rather than adapted from a template.",
+    howHeading: 'How It Works',
+    howText: "One AI architect is assigned to your business and stays on it, building and adjusting the system as your business grows rather than handing you a fixed package. Every Inbound and Outbound agent runs as part of the setup, specialised agents and tools get built around your specific team, and your infrastructure and website are built custom rather than templated, all maintained on an ongoing basis by that same dedicated person.",
+    includedHeading: "What's Included",
+    includedText: "Every Autonomous Inbound and Outbound agent is included from the start, alongside a full time AI architect whose job is your business specifically, not a shared pool of clients. Specialised AI agents get built for your team, and custom tools are built around how your workers actually work day to day, not a generic workflow. On top of that, you get a greater volume of personalised, autonomous automations than any individual plan offers, plus advanced, fully personalised AI infrastructure and a custom website built specifically for how your business runs.",
     whoHeading: "Who It's For",
     whoText: "Businesses ready to run substantially on AI, not just automate one part of the front desk. If you're past the stage of picking individual agents one at a time and want someone dedicated to building and maintaining the whole system for you as your business grows, this is that plan.",
-    includedHeading: "What's Included",
-    includedText: 'Every Autonomous Inbound and Outbound agent is included from the start, alongside a full time AI architect whose job is your business specifically, not a shared pool of clients. Specialised AI agents get built for your team, and custom tools are built around how your workers actually work day to day, not a generic workflow. On top of that, you get a greater volume of personalised, autonomous automations than any individual plan offers, plus advanced, fully personalised AI infrastructure and a custom website built specifically for how your business runs.',
     whyHeading: "Why It's Worth It",
-    whyText: 'Running six separate agents is still six separate things to manage on your own. This plan puts one person on your business full time, building and adjusting the whole system as it grows, instead of leaving you to manage each agent individually as your needs change.',
+    whyText: "Running six separate agents is still six separate things to manage on your own. This plan puts one person on your business full time, building and adjusting the whole system as it grows, instead of leaving you to manage each agent individually as your needs change.",
     buttonLabel: 'See Pricing',
     buttonLink: '/pricing#full-time',
     pricingTargetHash: '#full-time',
@@ -208,9 +212,10 @@ export const SERVICES_DATA: AgentOrPlanItem[] = [
 
 export const SERVICE_CATEGORIES = [
   'All',
+  'AI Consulting',
   'Inbound AI Agents',
   'Outbound AI Agents',
-  'Plans',
+  'Full Time',
 ] as const;
 
 export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number];
