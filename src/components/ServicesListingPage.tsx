@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SERVICES_DATA,
   SERVICE_CATEGORIES,
@@ -13,6 +13,7 @@ import { ScrollAnimation } from '@/components/ui/scroll-animation';
 import TextAnimation from '@/components/ui/scroll-text';
 
 export interface ServicesListingPageProps {
+  initialCategory?: ServiceCategory;
   onSelectIntegration: (slug: string) => void;
   onOpenDemo: () => void;
   onOpenContact: () => void;
@@ -30,12 +31,52 @@ const HERO_TAG_VARIANTS = {
 };
 
 export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
+  initialCategory,
   onSelectIntegration,
   onOpenDemo,
   onOpenContact,
   onBookDemo,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory>('All');
+  const getCategoryFromHash = (): ServiceCategory => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.includes('inbound')) return 'Inbound AI Agents';
+      if (hash.includes('outbound')) return 'Outbound AI Agents';
+      if (hash.includes('consulting')) return 'AI Consulting';
+      if (hash.includes('full-time')) return 'Full Time';
+    }
+    return 'All';
+  };
+
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory>(
+    initialCategory || getCategoryFromHash()
+  );
+
+  useEffect(() => {
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    } else {
+      setSelectedCategory(getCategoryFromHash());
+    }
+  }, [initialCategory]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setSelectedCategory(getCategoryFromHash());
+      if (window.location.hash) {
+        setTimeout(() => {
+          const el = document.getElementById('services-list');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
+  }, []);
 
   // Filter services by category
   const filteredIntegrations = SERVICES_DATA.filter((item) => {
@@ -160,7 +201,7 @@ export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
       </section>
 
       {/* Main Listing Section: Filter Tabs + Grid */}
-      <section className="pt-8 sm:pt-12 pb-24">
+      <section id="services-list" className="pt-8 sm:pt-12 pb-24 scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           {/* Category Filter Tabs */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>

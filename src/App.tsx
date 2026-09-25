@@ -106,7 +106,13 @@ export function App() {
       }
       if (window.location.hash) {
         setTimeout(() => {
-          const el = document.querySelector(window.location.hash);
+          const hash = window.location.hash;
+          if (hash.includes('inbound') || hash.includes('outbound')) {
+            const el = document.getElementById('services-list') || document.querySelector(hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+          const el = document.querySelector(hash);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 150);
       }
@@ -119,7 +125,13 @@ export function App() {
   useEffect(() => {
     if (window.location.hash) {
       setTimeout(() => {
-        const el = document.querySelector(window.location.hash);
+        const hash = window.location.hash;
+        if (hash.includes('inbound') || hash.includes('outbound')) {
+          const el = document.getElementById('services-list') || document.querySelector(hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        const el = document.querySelector(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 250);
     }
@@ -134,7 +146,7 @@ export function App() {
     } else if (page === 'integrations') {
       targetUrl = '/integrations';
     } else if (page === 'services') {
-      targetUrl = '/services';
+      targetUrl = hashOrSlug && hashOrSlug.startsWith('#') ? `/services${hashOrSlug}` : '/services';
     } else if (page === 'contact') {
       targetUrl = hashOrSlug && hashOrSlug.startsWith('#') ? `/contact${hashOrSlug}` : '/contact';
     } else if (page === 'integration-detail') {
@@ -183,6 +195,16 @@ export function App() {
             hashOrSlug === '#autonomous-inbound-ai-agents-2'
           ) {
             target = '#autonomous-inbound-ai-agents-2';
+          }
+        } else if (page === 'services') {
+          if (
+            hashOrSlug === '#inbound-ai-agents' ||
+            hashOrSlug === '#outbound-ai-agents' ||
+            hashOrSlug === '#inbound' ||
+            hashOrSlug === '#outbound' ||
+            hashOrSlug === '#services-list'
+          ) {
+            target = '#services-list';
           }
         }
         const el = document.querySelector(target);

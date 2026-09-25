@@ -440,7 +440,8 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
 
 const InboundTableSection: React.FC<{
   renderTableValue: (val: string | boolean) => React.ReactNode;
-}> = ({ renderTableValue }) => {
+  onNavigate?: PricingPageProps['onNavigate'];
+}> = ({ renderTableValue, onNavigate }) => {
   const { isYearly, setIsYearly } = useSectionBilling();
 
   const inboundColumns = [
@@ -528,7 +529,7 @@ const InboundTableSection: React.FC<{
   return (
     <section
       id="autonomous-inbound-ai-agents"
-      className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
+      className="py-16 md:py-24 bg-white scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32 border-t border-[#f2f2f2]"
     >
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
@@ -540,7 +541,21 @@ const InboundTableSection: React.FC<{
           </h2>
         </div>
 
-        <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 -mt-4 md:-mt-6 mb-10 md:mb-12">
+          <button
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('services', '#inbound-ai-agents');
+              } else {
+                window.location.href = '/services#inbound-ai-agents';
+              }
+            }}
+            className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
+          >
+            <span>View Details</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+
           <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
         </div>
 
@@ -611,7 +626,8 @@ const InboundTableSection: React.FC<{
 
 const OutboundTableSection: React.FC<{
   renderTableValue: (val: string | boolean) => React.ReactNode;
-}> = ({ renderTableValue }) => {
+  onNavigate?: PricingPageProps['onNavigate'];
+}> = ({ renderTableValue, onNavigate }) => {
   const { isYearly, setIsYearly } = useSectionBilling();
 
   const outboundColumns = [
@@ -669,7 +685,7 @@ const OutboundTableSection: React.FC<{
   return (
     <section
       id="autonomous-outbound-ai-agents"
-      className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
+      className="py-16 md:py-24 bg-white scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32 border-t border-[#f2f2f2]"
     >
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
@@ -681,7 +697,21 @@ const OutboundTableSection: React.FC<{
           </h2>
         </div>
 
-        <div className="flex items-center justify-end -mt-4 md:-mt-6 mb-10 md:mb-12">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 -mt-4 md:-mt-6 mb-10 md:mb-12">
+          <button
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('services', '#outbound-ai-agents');
+              } else {
+                window.location.href = '/services#outbound-ai-agents';
+              }
+            }}
+            className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
+          >
+            <span>View Details</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+
           <BillingToggle isYearly={isYearly} setIsYearly={setIsYearly} />
         </div>
 
@@ -998,19 +1028,32 @@ export const PricingPage: React.FC<PricingPageProps> = ({
             <section
               key={sectionIndex}
               id="ai-consulting"
-              className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
+              className="py-16 md:py-24 bg-white scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32 border-t border-[#f2f2f2]"
             >
               <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                   {/* Side Heading Group */}
                   <div className="lg:col-span-5 text-left">
-                    <div className="w-fit flex flex-col items-center">
+                    <div className="w-fit flex flex-col items-start">
                       <div className="pill-badge text-[#0056ff] mb-3">
                         <span>Plan</span>
                       </div>
-                      <h2 className="saalink-h2-section text-left">
+                      <h2 className="saalink-h2-section text-left mb-6">
                         AI Consulting
                       </h2>
+                      <button
+                        onClick={() => {
+                          if (onNavigate) {
+                            onNavigate('service-detail', 'consulting-plan');
+                          } else {
+                            window.location.href = '/services/consulting-plan';
+                          }
+                        }}
+                        className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
 
@@ -1058,11 +1101,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         }
 
         if (sectionIndex === 2) {
-          return <InboundTableSection key={sectionIndex} renderTableValue={renderTableValue} />;
+          return <InboundTableSection key={sectionIndex} renderTableValue={renderTableValue} onNavigate={onNavigate} />;
         }
 
         if (sectionIndex === 3) {
-          return <OutboundTableSection key={sectionIndex} renderTableValue={renderTableValue} />;
+          return <OutboundTableSection key={sectionIndex} renderTableValue={renderTableValue} onNavigate={onNavigate} />;
         }
 
         if (sectionIndex === 4) {
@@ -1079,19 +1122,32 @@ export const PricingPage: React.FC<PricingPageProps> = ({
             <section
               key={sectionIndex}
               id="full-time"
-              className="py-16 md:py-24 bg-white scroll-mt-0 sm:scroll-mt-2 border-t border-[#f2f2f2]"
+              className="py-16 md:py-24 bg-white scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32 border-t border-[#f2f2f2]"
             >
               <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                   {/* Side Heading Group */}
                   <div className="lg:col-span-5 text-left">
-                    <div className="w-fit flex flex-col items-center">
+                    <div className="w-fit flex flex-col items-start">
                       <div className="pill-badge text-[#0056ff] mb-3">
                         <span>Plan</span>
                       </div>
-                      <h2 className="saalink-h2-section text-left">
+                      <h2 className="saalink-h2-section text-left mb-6">
                         Full Time
                       </h2>
+                      <button
+                        onClick={() => {
+                          if (onNavigate) {
+                            onNavigate('service-detail', 'full-time-plan');
+                          } else {
+                            window.location.href = '/services/full-time-plan';
+                          }
+                        }}
+                        className="btn-blue text-[15px] py-2.5 px-6 cursor-pointer inline-flex items-center gap-2"
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
 
