@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import {
   getServiceBySlug,
   SERVICES_DATA,
@@ -28,6 +28,116 @@ const HERO_TAG_VARIANTS = {
     y: 0,
     transition: { duration: 0.4, ease: 'easeOut' },
   },
+};
+
+interface TierComparisonConfig {
+  subtitle?: string;
+  columns: string[];
+  rows: {
+    feature: string;
+    values: (string | boolean)[];
+  }[];
+}
+
+const TIER_COMPARISONS: Record<string, TierComparisonConfig> = {
+  'receptionist-ai-agent': {
+    columns: ['Standard', 'Expert', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['100 calls/mo', '500 calls/mo', 'Unlimited'] },
+      { feature: 'CRM Integration', values: ['Limited', 'Full', 'Full'] },
+      { feature: 'Team Notifications', values: ['Basic', 'Advanced', 'Custom'] },
+      { feature: 'Google Reviews', values: ['No', 'Yes', 'Yes'] },
+      { feature: 'Spam Filtering', values: ['No', 'Yes', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $300/mo', '$100 setup + $450/mo', '$100 setup + $500/mo'] },
+    ],
+  },
+  'customer-support-ai-call-agent': {
+    columns: ['Standard', 'Expert', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['100 calls/mo', '500 calls/mo', 'Unlimited'] },
+      { feature: 'CRM Integration', values: ['Limited', 'Full', 'Full'] },
+      { feature: 'Team Notifications', values: ['Basic', 'Advanced', 'Custom'] },
+      { feature: 'Google Reviews', values: ['No', 'Yes', 'Yes'] },
+      { feature: 'Spam Filtering', values: ['No', 'No', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $100/mo', '$100 setup + $250/mo', '$100 setup + $300/mo'] },
+    ],
+  },
+  'customer-support-ai-agent-widget': {
+    columns: ['Standard', 'Expert', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['100 messages/mo', '500 messages/mo', 'Unlimited'] },
+      { feature: 'CRM Integration', values: ['Limited', 'Full', 'Full'] },
+      { feature: 'Team Notifications', values: ['Basic', 'Advanced', 'Custom'] },
+      { feature: 'Google Reviews', values: ['No', 'Yes', 'Yes'] },
+      { feature: 'Spam Filtering', values: ['No', 'No', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $50/mo', '$150 setup + $80/mo', '$150 setup + $100/mo'] },
+    ],
+  },
+  'spam-filter-ai-agent': {
+    subtitle: 'Only two tiers here, not three, since screening calls is a simpler job than running a full front desk.',
+    columns: ['Standard', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['100 calls/mo', 'Unlimited'] },
+      { feature: 'Team Notifications', values: ['Advanced', 'Custom'] },
+      { feature: 'Spam Filtering', values: ['Yes', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $20/mo', '$100 setup + $50/mo'] },
+    ],
+  },
+  'lead-call-ai-agent': {
+    columns: ['Standard', 'Expert', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['50 calls/mo', '150 calls/mo', '500 calls/mo'] },
+      { feature: 'CRM Integration', values: ['Limited', 'Full', 'Full'] },
+      { feature: 'Team Notifications', values: ['Basic', 'Advanced', 'Custom'] },
+      { feature: 'Google Reviews', values: ['No', 'Yes', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $200/mo', '$100 setup + $350/mo', '$100 setup + $500/mo'] },
+    ],
+  },
+  'reviews-ai-agent': {
+    columns: ['Standard', 'Expert', 'Advanced'],
+    rows: [
+      { feature: 'Capacity', values: ['50 calls/mo', '150 calls/mo', '500 calls/mo'] },
+      { feature: 'CRM Integration', values: ['Limited', 'Full', 'Full'] },
+      { feature: 'Team Notifications', values: ['Basic', 'Advanced', 'Custom'] },
+      { feature: 'Appointment Booking', values: ['No', 'No', 'Yes'] },
+      { feature: 'Advanced Version', values: ['No', 'No', 'Yes'] },
+      { feature: 'Price', values: ['$50 setup + $100/mo', '$100 setup + $250/mo', '$100 setup + $300/mo'] },
+    ],
+  },
+};
+
+const renderTableValue = (val: string | boolean) => {
+  if (val === true || val === '✓' || val === 'Yes') {
+    return (
+      <div className="mx-auto flex h-5 w-5 items-center justify-center rounded-full bg-[#0056ff] text-white shadow-xs">
+        <Check className="h-3 w-3 stroke-[3]" />
+      </div>
+    );
+  }
+  if (val === false || val === '--') {
+    return (
+      <span className="font-heading text-[14px] font-normal text-[#a6a9ae]">
+        --
+      </span>
+    );
+  }
+  if (val === '✗' || val === 'x' || val === 'X' || val === 'No') {
+    return (
+      <span className="font-heading text-[14px] font-normal text-[#a6a9ae]">
+        ✕
+      </span>
+    );
+  }
+  return (
+    <span className="font-heading text-[13px] sm:text-[14px] font-medium text-[#0a0a0a]">
+      {val}
+    </span>
+  );
 };
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
@@ -70,6 +180,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
   const isPlanPage = item.category === 'Plans';
   const isOutboundPage = item.category === 'Outbound AI Agents';
   const isInboundPage = item.category === 'Inbound AI Agents';
+  const tierConfig = TIER_COMPARISONS[item.slug];
 
   let relatedHeading = '';
   let relatedItems: typeof SERVICES_DATA = [];
@@ -232,17 +343,19 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             </div>
           </ScrollAnimation>
 
-          {/* Who It's For Section */}
-          <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
-            <div className="mb-14">
-              <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
-                {item.whoHeading}
-              </h2>
-              <p className="text-[16px] leading-[1.7] text-[#525252]">
-                {item.whoText}
-              </p>
-            </div>
-          </ScrollAnimation>
+          {/* How It Works Section (when present) */}
+          {item.howHeading && item.howText && (
+            <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
+              <div className="mb-14">
+                <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                  {item.howHeading}
+                </h2>
+                <p className="text-[16px] leading-[1.7] text-[#525252]">
+                  {item.howText}
+                </p>
+              </div>
+            </ScrollAnimation>
+          )}
 
           {/* What's Included / What Happens on the Call Section */}
           {(item.includedText || (item.includedItems && item.includedItems.length > 0)) && (
@@ -268,19 +381,77 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             </ScrollAnimation>
           )}
 
-          {/* How It Works Section (when present) */}
-          {item.howHeading && item.howText && (
+          {/* Choosing Your Tier Section for Inbound & Outbound AI Agents */}
+          {tierConfig && (
             <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
               <div className="mb-14">
-                <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
-                  {item.howHeading}
+                <h2 className="mb-2 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                  Choosing Your Tier
                 </h2>
-                <p className="text-[16px] leading-[1.7] text-[#525252]">
-                  {item.howText}
-                </p>
+                {tierConfig.subtitle && (
+                  <p className="mb-4 text-[15px] sm:text-[16px] leading-[1.6] text-[#525252]">
+                    {tierConfig.subtitle}
+                  </p>
+                )}
+                <div className="overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 mt-4">
+                  <div className="min-w-[560px] sm:min-w-0 relative">
+                    {/* Table Header */}
+                    <div className="relative z-10 grid grid-cols-12 items-center pb-5 pt-2 border-b border-[#f2f2f2]">
+                      <div className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4`}>
+                        <h3 className="font-heading text-[18px] font-medium text-[#0a0a0a]">
+                          Features
+                        </h3>
+                      </div>
+                      {tierConfig.columns.map((colName, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center`}
+                        >
+                          <span className="font-heading text-[16px] font-medium text-[#0a0a0a]">
+                            {colName}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Table Body Rows */}
+                    {tierConfig.rows.map((row, rIdx) => (
+                      <div
+                        key={rIdx}
+                        className="grid grid-cols-12 items-center py-3 transition-colors hover:bg-neutral-50/50 rounded-lg border-b border-[#f2f2f2]/60"
+                      >
+                        <div className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} pl-4 pr-3`}>
+                          <span className="text-[13.5px] sm:text-[14px] font-semibold text-[#0a0a0a]">
+                            {row.feature}
+                          </span>
+                        </div>
+                        {row.values.map((val, vIdx) => (
+                          <div
+                            key={vIdx}
+                            className={`${tierConfig.columns.length === 2 ? 'col-span-4' : 'col-span-3'} text-center flex justify-center items-center`}
+                          >
+                            {renderTableValue(val)}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </ScrollAnimation>
           )}
+
+          {/* Who It's For Section */}
+          <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
+            <div className="mb-14">
+              <h2 className="mb-4 font-heading text-[26px] font-medium tracking-tight text-[#0a0a0a] sm:text-[32px]">
+                {item.whoHeading}
+              </h2>
+              <p className="text-[16px] leading-[1.7] text-[#525252]">
+                {item.whoText}
+              </p>
+            </div>
+          </ScrollAnimation>
 
           {/* Why It's Worth It Section */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
