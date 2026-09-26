@@ -95,7 +95,11 @@ export const HowItWorks: React.FC = () => {
                 <div className="w-full bg-[#f9fafb] overflow-hidden flex items-center justify-center mt-auto">
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={`Illustration representing ${item.title}: ${item.description}`}
+                    width="600"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-auto object-cover block transition-transform duration-300 group-hover:scale-105"
                   />

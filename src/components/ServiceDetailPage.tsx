@@ -285,7 +285,12 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                   {item.logoUrl ? (
                     <img
                       src={item.logoUrl}
-                      alt={`${item.name}`}
+                      alt={`${item.name} AI Agent visual interface`}
+                      width="150"
+                      height="150"
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
                       className="h-full w-full object-cover block"
                       referrerPolicy="no-referrer"
                     />
@@ -533,9 +538,9 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
             <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
               <div className="mb-10 text-center sm:mb-12">
-                <h3 className="font-heading text-[28px] font-medium tracking-tight text-[#0a0a0a] sm:text-[36px]">
+                <h2 className="font-heading text-[28px] font-medium tracking-tight text-[#0a0a0a] sm:text-[36px]">
                   {relatedHeading}
-                </h3>
+                </h2>
               </div>
             </ScrollAnimation>
 

@@ -15,7 +15,9 @@ export const SaalinkLogo: React.FC<{
     <div className={className}>
       <img
         src="/logo.png"
-        alt={text}
+        alt={`${text} official brand logo`}
+        width="26"
+        height="26"
         className={`${iconClassName} object-contain`}
       />
       <span

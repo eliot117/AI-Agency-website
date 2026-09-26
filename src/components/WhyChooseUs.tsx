@@ -97,6 +97,10 @@ export const WhyChooseUs: React.FC = () => {
                     <img
                       src={card.image}
                       alt={card.alt}
+                      width="650"
+                      height="310"
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-auto object-cover block"
                     />

@@ -153,7 +153,11 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
                     >
                       <img
                         src={tool.logoUrl}
-                        alt={`${tool.name} logo`}
+                        alt={`${tool.name} application logo`}
+                        width="64"
+                        height="64"
+                        loading="eager"
+                        decoding="async"
                         className="h-full w-full object-contain"
                         referrerPolicy="no-referrer"
                         onError={(e) => {
@@ -193,6 +197,7 @@ export const IntegrationsListingPage: React.FC<IntegrationsListingPageProps> = (
       {/* Main Listing Section: Filter Tabs + Grid */}
       <section className="pt-8 sm:pt-12 pb-24">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+          <h2 className="sr-only">Browse AI Tools and Integrations Directory</h2>
           {/* Category Filter Tabs */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
             <div className="mb-12 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">

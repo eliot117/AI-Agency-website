@@ -299,6 +299,7 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
   return (
     <section className="pt-8 sm:pt-12 pb-20 md:pb-28">
       <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+        <h2 className="sr-only">Available Pricing Plans &amp; Tiers</h2>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1 mb-8">
           <button
             onClick={() => {

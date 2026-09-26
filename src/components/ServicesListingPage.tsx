@@ -187,7 +187,11 @@ export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
                     >
                       <img
                         src={tool.logoUrl}
-                        alt={`${tool.name} logo`}
+                        alt={`${tool.name} AI Agent visual preview`}
+                        width="64"
+                        height="64"
+                        loading="eager"
+                        decoding="async"
                         className="h-full w-full object-cover block"
                         referrerPolicy="no-referrer"
                       />
@@ -203,6 +207,7 @@ export const ServicesListingPage: React.FC<ServicesListingPageProps> = ({
       {/* Main Listing Section: Filter Tabs + Grid */}
       <section id="services-list" className="pt-8 sm:pt-12 pb-24 scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+          <h2 className="sr-only">Browse AI Agents &amp; Consulting Plans</h2>
           {/* Category Filter Tabs */}
           <ScrollAnimation direction="up" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
             <div className="mb-12 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">

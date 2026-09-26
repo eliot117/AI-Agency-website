@@ -32,7 +32,11 @@ export const Integrations: React.FC<IntegrationsProps> = ({ onNavigateIntegratio
                     onError={(e) => {
                       e.currentTarget.src = '/office-icons.png';
                     }}
-                    alt="Microsoft Office Icons"
+                    alt="Overview of business productivity apps and communication tools integrated with AI Launch"
+                    width="1136"
+                    height="568"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-auto max-h-[620px] object-contain rounded-[20px] transition-transform duration-500 hover:scale-[1.05] transform scale-[1.06] cursor-pointer"
                   />

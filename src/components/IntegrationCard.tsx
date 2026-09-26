@@ -36,9 +36,12 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({
             {item.logoUrl ? (
               <img
                 src={item.logoUrl}
-                alt={`${item.name}`}
+                alt={`${item.name} AI Agent visual preview`}
+                width="360"
+                height="225"
                 className="h-full w-full object-cover block transition-transform duration-300 ease-out group-hover:scale-[1.08]"
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
             ) : (
@@ -111,9 +114,12 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({
           {item.logoUrl ? (
             <img
               src={item.logoUrl}
-              alt={`${item.name} logo`}
+              alt={`${item.name} application logo`}
+              width="64"
+              height="64"
               className="h-full w-full object-contain"
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const img = e.currentTarget;

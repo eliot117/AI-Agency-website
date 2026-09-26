@@ -686,6 +686,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       {/* 4 Info Cards Row */}
       <section className="pt-8 sm:pt-12 pb-8 sm:pb-12 px-4 sm:px-6 relative z-10 border-b border-[#f2f2f2]">
         <div className="max-w-[1200px] mx-auto">
+          <h2 className="sr-only">Ways to Connect With Our Team</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {/* Email Us */}
             <ScrollAnimation direction="up" delay={0} viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }} className="h-full">

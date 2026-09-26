@@ -99,7 +99,11 @@ export const FeatureShowcase: React.FC = () => {
               <div className="dashboard-frame overflow-hidden bg-white h-full flex flex-col">
                 <img
                   src="https://www.salesforce.com/blog/wp-content/uploads/sites/2/2025/08/AI-Agent-Facts-SMB.jpg?w=768&h=419"
-                  alt="AI Agent Facts Overview"
+                  alt="AI Launch dashboard overview showcasing appointment automation metrics and customer inquiry workflows"
+                  width="768"
+                  height="419"
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover block flex-1"
                 />

@@ -18,6 +18,11 @@ import { ServicesListingPage } from './components/ServicesListingPage';
 import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { ContactPage } from './components/ContactPage';
 import { BillingProvider } from './context/BillingContext';
+import { SEO } from './components/SEO';
+import { CORE_PAGES_SEO, SERVICES_SEO, getIntegrationSEO } from './data/seoMetadata';
+import { FAQ_ITEMS, PRICING_PLANS } from './data';
+import { getServiceBySlug, SERVICES_DATA } from './data/servicesData';
+import { getIntegrationBySlug, INTEGRATIONS_DATA } from './data/integrationsData';
 
 type PageState = 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'contact';
 
@@ -221,9 +226,197 @@ export function App() {
     navigateTo('contact', '#book-a-demo');
   };
 
+  const getSeoData = () => {
+    if (currentPage === 'contact') {
+      return {
+        ...CORE_PAGES_SEO.contact,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Contact', path: '/contact' },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ContactPage',
+            name: 'Contact AI Launch',
+            description: CORE_PAGES_SEO.contact.description,
+          },
+        ],
+      };
+    }
+    if (currentPage === 'pricing') {
+      return {
+        ...CORE_PAGES_SEO.pricing,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Pricing', path: '/pricing' },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'OfferCatalog',
+            name: 'AI Launch Plans & Pricing',
+            itemListElement: PRICING_PLANS.map((plan, idx) => ({
+              '@type': 'Offer',
+              position: idx + 1,
+              name: plan.name,
+              description: plan.subtitle,
+              price: plan.monthlyPrice,
+              priceCurrency: 'USD',
+            })),
+          },
+        ],
+      };
+    }
+    if (currentPage === 'services') {
+      return {
+        ...CORE_PAGES_SEO.services,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'AI Launch Autonomous Agents & Services',
+            itemListElement: SERVICES_DATA.map((srv, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: srv.name,
+              description: srv.shortDescription,
+              url: `/services/${srv.slug}`,
+            })),
+          },
+        ],
+      };
+    }
+    if (currentPage === 'service-detail') {
+      const service = getServiceBySlug(selectedIntegrationSlug);
+      const seo = SERVICES_SEO[selectedIntegrationSlug] || (service ? {
+        title: `${service.name} | 24/7 AI Agent | AI Launch`,
+        description: service.shortDescription,
+        canonicalPath: `/services/${service.slug}`,
+        primaryKeyword: service.name,
+        ogImage: service.logoUrl,
+      } : CORE_PAGES_SEO.services);
+
+      const isSoftware = service && service.category.includes('AI Agents');
+      const serviceSchema = service
+        ? isSoftware
+          ? {
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: service.name,
+              applicationCategory: 'BusinessApplication',
+              operatingSystem: 'Cloud',
+              description: service.shortDescription,
+              image: service.logoUrl,
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+                description: service.tagline,
+              },
+            }
+          : {
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              name: service.name,
+              serviceType: service.category,
+              description: service.shortDescription,
+              image: service.logoUrl,
+              provider: {
+                '@type': 'LocalBusiness',
+                name: 'AI Launch',
+              },
+            }
+        : {};
+
+      return {
+        ...seo,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+          { name: service?.name || 'Service Detail', path: `/services/${service?.slug || selectedIntegrationSlug}` },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: service ? [serviceSchema] : [],
+      };
+    }
+    if (currentPage === 'integrations') {
+      return {
+        ...CORE_PAGES_SEO.integrations,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integrations' },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'AI Launch Integrations Directory',
+            itemListElement: INTEGRATIONS_DATA.slice(0, 10).map((it, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: it.name,
+              description: it.shortDescription,
+              url: `/integrations/${it.slug}`,
+            })),
+          },
+        ],
+      };
+    }
+    if (currentPage === 'integration-detail') {
+      const item = getIntegrationBySlug(selectedIntegrationSlug);
+      const seo = item
+        ? getIntegrationSEO(item.name, item.slug, item.shortDescription, item.logoUrl)
+        : CORE_PAGES_SEO.integrations;
+
+      const appSchema = item
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: `${item.name} Integration for AI Launch`,
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Cloud',
+            description: item.shortDescription,
+            image: item.logoUrl,
+          }
+        : {};
+
+      return {
+        ...seo,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integrations' },
+          { name: item?.name || 'Integration Detail', path: `/integrations/${item?.slug || selectedIntegrationSlug}` },
+        ],
+        faqs: FAQ_ITEMS,
+        additionalSchemas: item ? [appSchema] : [],
+      };
+    }
+
+    // Default Home Page
+    return {
+      ...CORE_PAGES_SEO.home,
+      breadcrumbs: [{ name: 'Home', path: '/' }],
+      faqs: FAQ_ITEMS,
+    };
+  };
+
+  const seoData = getSeoData();
+
   return (
     <BillingProvider>
       <div className="min-h-screen bg-white text-[#0a0a0a] selection:bg-[#0056ff] selection:text-white font-sans antialiased">
+        {/* Dynamic Per-Page SEO & Structured Data */}
+        <SEO {...seoData} />
+
         {/* Floating Navigation */}
         <Navbar
           currentPage={currentPage}

@@ -13,7 +13,11 @@ export const ZigzagFeatures: React.FC = () => {
             <ScrollAnimation direction="left" viewport={{ amount: 0.3, margin: '0px 0px -40px 0px', once: true }}>
               <img
                 src="https://framerusercontent.com/images/G3kpxPdMqLfQwteSlthgsS42WY.png?width=1732&height=1384"
-                alt="Convert to Booked Calls"
+                alt="AI calendar scheduling interface converting incoming calls into confirmed client meetings"
+                width="866"
+                height="692"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-auto rounded-[20px] object-cover block"
               />
@@ -40,7 +44,7 @@ export const ZigzagFeatures: React.FC = () => {
             </TextAnimation>
 
             <TextAnimation
-              as="h3"
+              as="h2"
               variants={{
                 hidden: { filter: 'blur(10px)', opacity: 0, y: 20 },
                 visible: {
@@ -99,7 +103,7 @@ export const ZigzagFeatures: React.FC = () => {
             </TextAnimation>
 
             <TextAnimation
-              as="h3"
+              as="h2"
               variants={{
                 hidden: { filter: 'blur(10px)', opacity: 0, y: 20 },
                 visible: {
@@ -139,7 +143,11 @@ export const ZigzagFeatures: React.FC = () => {
             <ScrollAnimation direction="right" viewport={{ amount: 0.3, margin: '0px 0px -40px 0px', once: true }}>
               <img
                 src="https://framerusercontent.com/images/TMCJCUjTDzwuDdUySMVzD3n3PNs.png?width=1732&height=1388"
-                alt="Capture More Leads"
+                alt="Automated conversational lead capture and qualification workflow"
+                width="866"
+                height="694"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-auto rounded-[20px] object-cover block"
               />
@@ -153,7 +161,11 @@ export const ZigzagFeatures: React.FC = () => {
             <ScrollAnimation direction="left" viewport={{ amount: 0.3, margin: '0px 0px -40px 0px', once: true }}>
               <img
                 src="/Gemini_Generated_Image_6j2bms6j2bms6j2b.jpg"
-                alt="Track and Improve"
+                alt="AI agent analytics overview showing call volume trends, customer feedback, and booking rates"
+                width="866"
+                height="692"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-auto rounded-[20px] object-cover block"
               />
@@ -180,7 +192,7 @@ export const ZigzagFeatures: React.FC = () => {
             </TextAnimation>
 
             <TextAnimation
-              as="h3"
+              as="h2"
               variants={{
                 hidden: { filter: 'blur(10px)', opacity: 0, y: 20 },
                 visible: {

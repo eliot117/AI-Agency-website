@@ -96,7 +96,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                 >
                   <img
                     src="https://imageio.forbes.com/specials-images/imageserve/68c0ea2f0bf6ff7b7465abc6/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds"
-                    alt="AI Agents & Plans Services"
+                    alt="Autonomous AI agents and business consultation services ecosystem overview"
+                    width="1600"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-auto max-h-[520px] object-cover rounded-[20px] border border-[#f0f0f4] shadow-md transition-transform duration-500 hover:scale-[1.02] cursor-pointer"
                   />
