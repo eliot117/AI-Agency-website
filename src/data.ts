@@ -149,7 +149,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'free-ai-consulting',
     name: 'AI Consulting',
-    subtitle: 'Find out exactly where AI fits your business.',
+    subtitle: 'Find out exactly where AI\nfits in your business.',
     monthlyPrice: 0,
     yearlyPrice: 10,
     ctaText: 'Book a Demo',
@@ -166,7 +166,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'inbound-agents',
     name: 'Autonomous Inbound AI Agents',
-    subtitle: 'Never miss a call or message that comes in.',
+    subtitle: 'Never miss a call or message\nthat comes in.',
     monthlyPrice: 79,
     yearlyPrice: 63,
     popular: true,
@@ -184,7 +184,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'outbound-agents',
     name: 'Autonomous Outbound AI Agents',
-    subtitle: 'Follows up on every enquiry, automatically.',
+    subtitle: 'Follows up on every enquiry\nautomatically.',
     monthlyPrice: 149,
     yearlyPrice: 119,
     ctaText: 'Book a Demo',
@@ -201,7 +201,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'enterprise',
     name: 'Full Time (Enterprise)',
-    subtitle: 'For businesses ready to run entirely on AI.',
+    subtitle: 'For businesses ready to run\nentirely on AI.',
     monthlyPrice: 249,
     yearlyPrice: 199,
     ctaText: 'Book a Demo',

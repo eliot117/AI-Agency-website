@@ -325,7 +325,7 @@ export const Pricing: React.FC<PricingProps> = ({
 
                     {/* Subtitle - Fixed height container so prices align perfectly */}
                     <div className="min-h-[46px] sm:min-h-[50px] flex items-start justify-center mb-3 text-center">
-                      <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#555555] font-normal leading-relaxed text-center">
+                      <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#555555] font-normal leading-relaxed text-center whitespace-pre-line">
                         {plan.subtitle}
                       </p>
                     </div>

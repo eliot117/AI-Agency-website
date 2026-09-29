@@ -343,7 +343,7 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
                     </div>
 
                     <div className="min-h-[46px] sm:min-h-[50px] flex items-start justify-center mb-3 text-center">
-                      <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#525252] font-normal leading-relaxed text-center">
+                      <p className="text-[14px] sm:text-[14.5px] xl:text-[15.5px] text-[#525252] font-normal leading-relaxed text-center whitespace-pre-line">
                         {plan.subtitle}
                       </p>
                     </div>
@@ -782,7 +782,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
     {
       id: 'free-ai-consulting',
       name: 'AI Consulting',
-      subtitle: 'Find out exactly where AI fits your business.',
+      subtitle: 'Find out exactly where AI\nfits in your business.',
       monthlyPrice: 0,
       yearlyPrice: 10,
       popular: false,
@@ -801,7 +801,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
     {
       id: 'inbound-agents',
       name: 'Autonomous Inbound AI Agents',
-      subtitle: 'Never miss a call or message that comes in.',
+      subtitle: 'Never miss a call or message\nthat comes in.',
       monthlyPrice: 79,
       yearlyPrice: 63,
       popular: true,
@@ -820,7 +820,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
     {
       id: 'outbound-agents',
       name: 'Autonomous Outbound AI Agents',
-      subtitle: 'Follows up on every enquiry, automatically.',
+      subtitle: 'Follows up on every enquiry\nautomatically.',
       monthlyPrice: 149,
       yearlyPrice: 119,
       popular: false,
@@ -839,7 +839,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
     {
       id: 'enterprise',
       name: 'Full Time (Enterprise)',
-      subtitle: 'For businesses ready to run entirely on AI.',
+      subtitle: 'For businesses ready to run\nentirely on AI.',
       monthlyPrice: 249,
       yearlyPrice: 199,
       popular: false,
