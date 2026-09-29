@@ -23,6 +23,7 @@ import { CORE_PAGES_SEO, SERVICES_SEO, getIntegrationSEO } from './data/seoMetad
 import { FAQ_ITEMS, PRICING_PLANS } from './data';
 import { getServiceBySlug, SERVICES_DATA } from './data/servicesData';
 import { getIntegrationBySlug, INTEGRATIONS_DATA } from './data/integrationsData';
+import { useDocumentMeta } from './hooks/use-document-meta';
 
 type PageState = 'home' | 'pricing' | 'integrations' | 'integration-detail' | 'services' | 'service-detail' | 'contact';
 
@@ -410,6 +411,34 @@ export function App() {
   };
 
   const seoData = getSeoData();
+
+  const pageMeta: Record<string, { title: string; description: string }> = {
+    home: {
+      title: 'AI Launch | AI Agents for Missed Calls, Leads & Bookings',
+      description: 'AI Launch builds custom AI agents that answer every call, follow up leads instantly, and book appointments automatically for Melbourne small businesses.',
+    },
+    pricing: {
+      title: 'Pricing | AI Launch AI Agents for SMBs',
+      description: 'Compare AI Launch pricing for inbound and outbound AI agents, from a free AI consulting call to full time AI automation for your business.',
+    },
+    integrations: {
+      title: 'Integrations | AI Launch Connects With Your Existing Tools',
+      description: 'See every tool AI Launch connects with, including HubSpot, Google Calendar, Slack, Stripe and 40+ other apps your business already runs on.',
+    },
+    contact: {
+      title: 'Contact & Book a Demo | AI Launch',
+      description: 'Book a free AI consulting call or send AI Launch a message to find out where AI agents fit your business.',
+    },
+  };
+  const integrationItem = currentPage === 'integration-detail' ? getIntegrationBySlug(selectedIntegrationSlug) : undefined;
+  useDocumentMeta(
+    currentPage === 'integration-detail' && integrationItem
+      ? `${integrationItem.name} Integration | AI Launch`
+      : pageMeta[currentPage]?.title || 'AI Launch',
+    currentPage === 'integration-detail' && integrationItem
+      ? integrationItem.shortDescription
+      : pageMeta[currentPage]?.description
+  );
 
   return (
     <BillingProvider>

@@ -341,9 +341,9 @@ export const Pricing: React.FC<PricingProps> = ({
                           <span className="text-[32px] sm:text-[36px] font-['Inter',sans-serif] font-normal text-[#0a0a0a] leading-none mr-0.5">$</span>
                           <span className="text-[32px] sm:text-[36px] font-['Inter',sans-serif] font-normal text-[#0a0a0a] tracking-tight leading-none">
                             {plan.id === 'inbound-agents' ? (
-                              <AnimatedPriceRange minVal={isYearly ? 40 : 50} maxVal={isYearly ? 400 : 500} />
+                              <AnimatedPriceRange minVal={isYearly ? 16 : 20} maxVal={isYearly ? 400 : 500} />
                             ) : plan.id === 'outbound-agents' ? (
-                              <AnimatedPriceRange minVal={isYearly ? 240 : 300} maxVal={isYearly ? 560 : 700} />
+                              <AnimatedPriceRange minVal={isYearly ? 80 : 100} maxVal={isYearly ? 400 : 500} />
                             ) : (
                               <AnimatedPrice value={price} isYearly={isYearly} />
                             )}

@@ -1,6 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://ais-pre-n3umzxa6pxb3kvsljrc3s6-43670058807.asia-east1.run.app/sitemap.xml
+Sitemap: https://ai-launch-agency.vercel.app/sitemap.xml

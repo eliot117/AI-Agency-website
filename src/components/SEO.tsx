@@ -24,7 +24,7 @@ export interface SEOProps {
 const DEFAULT_ORIGIN =
   typeof window !== 'undefined' && window.location.origin
     ? window.location.origin
-    : 'https://ais-pre-n3umzxa6pxb3kvsljrc3s6-43670058807.asia-east1.run.app';
+    : 'https://ai-launch-agency.vercel.app';
 
 export const BASE_BUSINESS_SCHEMA = (origin: string = DEFAULT_ORIGIN) => ({
   '@context': 'https://schema.org',

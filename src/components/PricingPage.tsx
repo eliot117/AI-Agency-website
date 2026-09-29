@@ -360,9 +360,9 @@ const PricingCardsSection: React.FC<PricingCardsSectionProps> = ({
                           </span>
                           <span className="font-['Inter',sans-serif] text-[32px] sm:text-[36px] font-normal text-[#0a0a0a] tracking-tight leading-none">
                             {plan.id === 'inbound-agents' ? (
-                              <AnimatedPriceRange minVal={isYearly ? 40 : 50} maxVal={isYearly ? 400 : 500} />
+                              <AnimatedPriceRange minVal={isYearly ? 16 : 20} maxVal={isYearly ? 400 : 500} />
                             ) : plan.id === 'outbound-agents' ? (
-                              <AnimatedPriceRange minVal={isYearly ? 240 : 300} maxVal={isYearly ? 560 : 700} />
+                              <AnimatedPriceRange minVal={isYearly ? 80 : 100} maxVal={isYearly ? 400 : 500} />
                             ) : (
                               <AnimatedPrice value={currentPrice} isYearly={isYearly} />
                             )}
@@ -789,10 +789,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       ctaText: 'Book a Demo',
       featuresTitle: 'Everything in AI Consulting :',
       features: [
-        'Free AI business discussion',
-        'Live demo of your options',
-        'Personalised recommendations',
-        'Industry specific tips',
+        'AI Business Discussion',
+        'Assessment Results',
+        'Personalised Recommendations',
+        'Industry Tips',
+        'Enquiries About Services',
+        'Live Demo',
       ],
       buttonStyle: 'border border-[#0056ff] bg-white text-[#0056ff] hover:bg-[#0056ff]/5',
     },
@@ -844,11 +846,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       ctaText: 'Book a Demo',
       featuresTitle: 'Everything in Full Time (Enterprise) :',
       features: [
-        'Full time AI architect',
-        'Specialised agents for your team',
-        'Custom tools for your workers',
-        'More automations, no limits',
-        'Custom AI infrastructure & website',
+        'Full Time AI Architect',
+        'Full Time AI Solutions Engineer',
+        'Full Systems Automated',
+        'Specialised AI Agents for Workers',
+        'Custom AI Tools & AI Apps for Workers',
+        'Custom AI Developments, Infrastructures & Websites',
       ],
       buttonStyle: 'border border-[#0056ff] bg-white text-[#0056ff] hover:bg-[#0056ff]/5',
     },

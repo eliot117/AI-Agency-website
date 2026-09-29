@@ -8,19 +8,19 @@ export interface PageMetadata {
 
 export const CORE_PAGES_SEO: Record<string, PageMetadata> = {
   home: {
-    title: 'AI Launch | 24/7 AI Phone Receptionist & Booking Agents',
+    title: 'AI Launch | AI Agents for Missed Calls, Leads & Bookings',
     description:
-      'Turn missed calls into booked appointments automatically with AI Launch. 24/7 AI phone receptionists, smart CRM integration, and instant lead follow-ups.',
+      'AI Launch builds custom AI agents that answer every call, follow up leads instantly, and book appointments automatically for Melbourne small businesses.',
     canonicalPath: '/',
-    primaryKeyword: 'AI Phone Receptionist & Booking Agents',
+    primaryKeyword: 'AI Agents for Missed Calls, Leads & Bookings',
     ogImage: '/logo.png',
   },
   pricing: {
-    title: 'Transparent Pricing & Plans | AI Launch Phone Agents',
+    title: 'Pricing | AI Launch AI Agents for SMBs',
     description:
-      'Explore transparent pricing for AI Launch inbound phone agents, outbound follow-ups, and full-time AI architect systems. Scale your business on autopilot.',
+      'Compare AI Launch pricing for inbound and outbound AI agents, from a free AI consulting call to full time AI automation for your business.',
     canonicalPath: '/pricing',
-    primaryKeyword: 'Pricing & Plans AI Phone Agents',
+    primaryKeyword: 'Pricing AI Launch AI Agents',
     ogImage: '/logo.png',
   },
   services: {
@@ -32,19 +32,19 @@ export const CORE_PAGES_SEO: Record<string, PageMetadata> = {
     ogImage: '/logo.png',
   },
   integrations: {
-    title: '40+ Business App & CRM Integrations | AI Launch',
+    title: 'Integrations | AI Launch Connects With Your Existing Tools',
     description:
-      'Seamlessly connect AI Launch with Google Calendar, Outlook, Slack, HubSpot, Zapier, PayPal, and 40+ productivity, communication, and payment platforms.',
+      'See every tool AI Launch connects with, including HubSpot, Google Calendar, Slack, Stripe and 40+ other apps your business already runs on.',
     canonicalPath: '/integrations',
-    primaryKeyword: 'Business App & CRM Integrations',
+    primaryKeyword: 'AI Launch Integrations',
     ogImage: '/logo.png',
   },
   contact: {
-    title: 'Book a Live Demo & Free AI Consulting | AI Launch',
+    title: 'Contact & Book a Demo | AI Launch',
     description:
-      'Get in touch with AI Launch in Melbourne, VIC. Book a personalized live demo, schedule free AI consulting, or submit your business inquiry to our team.',
+      'Book a free AI consulting call or send AI Launch a message to find out where AI agents fit your business.',
     canonicalPath: '/contact',
-    primaryKeyword: 'Book a Live Demo & Free AI Consulting',
+    primaryKeyword: 'Contact & Book a Demo',
     ogImage: '/logo.png',
   },
 };
