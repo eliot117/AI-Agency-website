@@ -1095,7 +1095,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             {/* Right Column: Bottom-Right Heading Group (Below & Hugging Bottom-Right of Form) */}
             <div className="w-full lg:w-[340px] xl:w-[370px] shrink-0 flex flex-col justify-end lg:-mb-10 xl:-mb-12">
               <ScrollAnimation direction="right" viewport={{ amount: 0.2, margin: '0px 0px -40px 0px', once: true }}>
-                <div className="space-y-3.5 sm:space-y-4 text-right w-full lg:w-[470px] xl:w-[490px] relative lg:-left-8 xl:-left-10">
+                <div className="space-y-3.5 sm:space-y-4 text-right w-full lg:w-[470px] xl:w-[490px] relative -left-4 sm:-left-6 lg:-left-20 xl:-left-24">
                   <p className="font-heading text-[15px] sm:text-[16px] xl:text-[17px] leading-[1.45] text-[#525252] w-full lg:w-[470px] xl:w-[490px] text-right">
                     Book a personalized demo to discover how our platform streamlines workflows and drives growth.
                   </p>
